@@ -1,0 +1,15 @@
+2D action platformer inspired by bakugo from MHA
+
+both combat and movement is primarily based around explosions from hands
+mouse/right stick to aim hands
+left/right click/bumper detonate separate hands, and can be charged
+explosions deal damage in a short range cone, and push the player in an opposite direction
+explosions either:
+  recharge after trigger (variable based on charge amount)
+  have a regenerating resource (e.g. stamina)
+  
+  this is to make infinitely flying very difficult (impossible?)
+
+hold modifier buttons to change explosion type
+  AP shot (beam attack)
+  ???

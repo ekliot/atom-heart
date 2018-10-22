@@ -1,0 +1,43 @@
+"""
+filename: idle.gd
+"""
+
+extends '../player_state.gd'
+
+func _init():
+  ID = 'idle'
+
+
+"""
+=== OVERRIDES
+"""
+
+func _on_enter(state_data, last_state):
+  # play idle animation
+  # fsm.host.animate(ID + move_dir_as_str())
+  return ._on_enter(state_data, last_state)
+
+func _physics_update(delta):
+  if not player.is_on_floor():
+    return 'airborne'
+
+  # if the player controls are set to move... don't just stand there, MOVE!
+  if player.get_h_dir():
+    return 'move'
+
+  # if Input.is_action_just_pressed("ui_up"):
+  #   return 'jumping'
+
+  # if we're in motion, apply friction
+  if player.get_velocity_flat().x >= player.MIN_VEL.x:
+    var _vel = player.velocity
+
+    _vel = update_velocity(_vel, Vector2(0.0, PHYSICS.GRAVITY))
+    _vel = PHYSICS.apply_friction_vec(_vel, player.get_friction())
+
+    player.apply_velocity(_vel)
+  else:
+    # short circuit the last fractions of lerping velocity
+    player.velocity = Vector2()
+
+  return ._physics_update(delta)
