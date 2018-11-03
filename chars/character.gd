@@ -14,6 +14,7 @@ signal take_damage(from, amt, type)
 
 onready var FSM = $StateMachine
 
+
 """
 === PROPERTIES
 """
@@ -24,8 +25,7 @@ onready var FSM = $StateMachine
 
 var MAX_VEL = Vector2(200.0, -1.0)
 var MIN_VEL = Vector2(40.0, -1.0)
-var ACCEL = Vector2(40.0, PHYSICS.GRAVITY) setget ,get_acceleration
-var AIR_VEL_MOD = 0.4 setget ,get_air_vel_mod
+var ACCEL   = Vector2(40.0, PHYSICS.GRAVITY) setget ,get_acceleration
 var AIR_ACCEL_MOD = 0.4 setget ,get_air_accel_mod
 var JUMP_HEIGHT = 200.0 setget ,get_jump_height
 
@@ -36,39 +36,46 @@ var JUMP_HEIGHT = 200.0 setget ,get_jump_height
 var MAX_HEALTH = 10
 
 """
---- Member properties
+--- Instance properties
 """
 
 var velocity = Vector2() setget ,get_velocity
 var look_dir = Vector2() setget ,get_look_dir
 var current_health = MAX_HEALTH
 
+
 """
 === PRIVATES
 """
 
 func _ready():
-  # FSM.set_host(self)
-  prints(self, FSM.HOST)
   FSM.start('idle')
   FSM.connect('state_change', self, '_on_state_change')
 
 func _on_state_change(state_from, state_to):
   LOGGER.debug(self, "changed state from %s to %s" % [state_from, state_to])
 
+
 """
 === CORE
 """
 
 func apply_velocity(vel=velocity, up=PHYSICS.UP):
+  """
+  move the character by its current (default), or arbitrary, velocity
+  """
   var _pos = get_position()
   velocity = move_and_slide(vel, up)
   if _pos != get_position():
     emit_signal('update_position', _pos, get_position())
 
-func push_me(accel, dir):
+func push_me(accel, dir, up=PHYSICS.UP):
+  """
+  apply an impulse to the character's current velocity
+  """
   var _pos = get_position()
-  velocity = move_and_slide(velocity + accel * dir)
+  var impulse = velocity + accel * dir
+  velocity = move_and_slide(impulse, up)
   if _pos != get_position():
     emit_signal('update_position', _pos, get_position())
 
@@ -86,6 +93,9 @@ func take_damage(from, amt, type=null):
 === HELPERS
 """
 
+func is_airborne():
+  return not is_on_floor() and not is_on_wall()
+
 """
 --- Physics Set/Getters
 """
@@ -100,10 +110,10 @@ func get_velocity_flat():
   return velocity.abs().floor()
 
 func get_acceleration():
-  return ACCEL
-
-func get_air_vel_mod():
-  return AIR_VEL_MOD
+  var accel = ACCEL
+  if is_airborne():
+    accel.x *= AIR_ACCEL_MOD
+  return accel
 
 func get_air_accel_mod():
   return AIR_ACCEL_MOD
@@ -117,9 +127,11 @@ func get_friction():
   if is_on_floor():
     for slide_idx in get_slide_count():
       var collider = get_slide_collision(slide_idx).collider
+      # some colliders don't have friction properties
       if collider.get('friction'):
         friction += collider.friction
   elif is_on_wall():
+    # get wall friction
     pass
   else:
     friction = PHYSICS.FRICTION_AIR
@@ -145,6 +157,7 @@ func get_move_data():
 func get_h_dir():
   """
   Returns the player movement as a horizontal direction value
+  To be overridden in extending classesy
     *  1 => right
     *  0 => still
     * -1 => left

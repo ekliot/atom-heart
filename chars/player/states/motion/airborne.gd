@@ -4,8 +4,8 @@ filename: airborne.gd
 
 extends '../player_state.gd'
 
-func _init():
-  ID = 'airborne'
+# func _init():
+#   ID = 'airborne'
 
 
 """
@@ -23,7 +23,7 @@ func _physics_update(delta):
   if player.is_on_floor():
     if h_dir:
       return 'move'
-    return 'idle'
+    return FSM.START_STATE
   elif player.is_on_wall():
     return 'move' # TODO 'on_wall'
 
@@ -37,16 +37,8 @@ func _physics_update(delta):
 """
 
 func move_step(h_dir):
-  var _vel = player.velocity
-
-  var accel = player.ACCEL
-  accel.x *= player.AIR_ACCEL_MOD
-
-  _vel = update_velocity(_vel, accel)
-
+  var _vel = update_velocity()
   var max_v = player.MAX_VEL
-  max_v.x *= player.AIR_VEL_MOD
-
   _vel = PHYSICS.cap_velocity(_vel, max_v) # , player.get_friction())
 
   player.apply_velocity(_vel)

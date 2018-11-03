@@ -4,8 +4,8 @@ filename: move.gd
 
 extends '../player_state.gd'
 
-func _init():
-  ID = 'move'
+# func _init():
+#   ID = 'move'
 
 
 """
@@ -25,14 +25,14 @@ func _update(delta):
   return ._update(delta)
 
 func _physics_update(delta):
-  if not player.is_on_floor() and not player.is_on_wall():
-    return 'airborne'
+  if Input.is_action_just_pressed("ui_up"):
+    return "jumping"
 
   # if player.is_on_wall():
   #   return 'on_wall'
 
-  # if Input.is_action_just_pressed("ui_up"):
-  #   return "jumping"
+  if not player.is_on_floor():
+    return 'airborne'
 
   var h_dir = player.get_h_dir()
 
@@ -42,7 +42,7 @@ func _physics_update(delta):
   move_step()
 
   # if we've stopped moving (such as hitting a wall), return to our last state (idle)
-  if not player.get_velocity().x:
+  if not player.velocity.x:
     return FSM.START_STATE
 
   return ._physics_update(delta)
@@ -53,9 +53,7 @@ func _physics_update(delta):
 """
 
 func move_step():
-  var _vel = player.velocity
-
-  _vel = update_velocity(_vel)
-  _vel = PHYSICS.cap_velocity(_vel, player.MAX_VEL) # , player.get_friction())
-
+  var _vel = update_velocity()
+  _vel = PHYSICS.cap_velocity(_vel, player.MAX_VEL)
+  # TODO friction?
   player.apply_velocity(_vel)
