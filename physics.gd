@@ -33,7 +33,7 @@ func cap_velocity(vel, cap): #, friction=null):
   #     var y_dir = sign(vel.y)
   #     vel.y = apply_friction_flt(vel.y, friction, y_dir * cap.y)
   # else:
-  vel.x = min(max(vel.x, -cap.x), cap.x)
-  vel.y = min(max(vel.y, -cap.y), cap.y)
+  vel.x = clamp(vel.x, -cap.x, cap.x)
+  vel.y = clamp(vel.y, -cap.y, cap.y)
 
   return vel

@@ -28,5 +28,5 @@ func jump(vel):
   """
   return a velocity vector with player jump velocity applied
   """
-  vel.y -= player.JUMP_HEIGHT
+  vel.y -= player.JUMP_FORCE
   return vel

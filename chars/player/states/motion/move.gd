@@ -4,9 +4,6 @@ filename: move.gd
 
 extends '../player_state.gd'
 
-# func _init():
-#   ID = 'move'
-
 
 """
 === STATE OVERRIDES

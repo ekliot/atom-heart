@@ -27,13 +27,13 @@ var MAX_VEL = Vector2(200.0, -1.0)
 var MIN_VEL = Vector2(40.0, -1.0)
 var ACCEL   = Vector2(40.0, PHYSICS.GRAVITY) setget ,get_acceleration
 var AIR_ACCEL_MOD = 0.4 setget ,get_air_accel_mod
-var JUMP_HEIGHT = 200.0 setget ,get_jump_height
+export (float) var JUMP_FORCE = 200.0 setget ,get_jump_force
 
 """
 --- Gameplay constants
 """
 
-var MAX_HEALTH = 10
+export (int) var MAX_HEALTH = 10
 
 """
 --- Instance properties
@@ -49,11 +49,11 @@ var current_health = MAX_HEALTH
 """
 
 func _ready():
-  FSM.start('idle')
   FSM.connect('state_change', self, '_on_state_change')
+  FSM.start('idle')
 
 func _on_state_change(state_from, state_to):
-  LOGGER.debug(self, "changed state from %s to %s" % [state_from, state_to])
+  LOGGER.debug(FSM, "changed state from %s to %s" % [state_from, state_to])
 
 
 """
@@ -138,8 +138,8 @@ func get_friction():
 
   return max(min(friction, 1.0), 0.0)
 
-func get_jump_height():
-  return JUMP_HEIGHT
+func get_jump_force():
+  return JUMP_FORCE
 
 func get_move_data():
   return {

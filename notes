@@ -7,6 +7,8 @@ explosions deal damage in a short range cone, and push the player in an opposite
 explosions either:
   recharge after trigger (variable based on charge amount)
   have a regenerating resource (e.g. stamina)
+  !!! GOOD IDEA BELOW !!!
+  overheating. when heat level hits threshold, explode (taking/emitting damage, launching self, and stunning temporarily)
   
   this is to make infinitely flying very difficult (impossible?)
 
