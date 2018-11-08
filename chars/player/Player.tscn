@@ -1,17 +1,20 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://chars/Character.tscn" type="PackedScene" id=1]
 [ext_resource path="res://chars/player/player.gd" type="Script" id=2]
 [ext_resource path="res://icon.png" type="Texture" id=3]
-[ext_resource path="res://util/states/State.tscn" type="PackedScene" id=4]
-[ext_resource path="res://chars/player/states/motion/idle.gd" type="Script" id=5]
-[ext_resource path="res://chars/player/states/motion/move.gd" type="Script" id=6]
-[ext_resource path="res://chars/player/states/motion/airborne.gd" type="Script" id=7]
-[ext_resource path="res://chars/player/states/motion/jumping.gd" type="Script" id=8]
+[ext_resource path="res://chars/player/arms/Arm.tscn" type="PackedScene" id=4]
+[ext_resource path="res://util/states/State.tscn" type="PackedScene" id=5]
+[ext_resource path="res://chars/player/states/motion/idle.gd" type="Script" id=6]
+[ext_resource path="res://chars/player/states/motion/move.gd" type="Script" id=7]
+[ext_resource path="res://chars/player/states/motion/airborne.gd" type="Script" id=8]
+[ext_resource path="res://chars/player/states/motion/jumping.gd" type="Script" id=9]
 
 [node name="Player" index="0" instance=ExtResource( 1 )]
 
 script = ExtResource( 2 )
+JUMP_FORCE = 200.0
+MAX_HEALTH = 10
 
 [node name="Collider" parent="." index="0"]
 
@@ -21,40 +24,30 @@ polygon = PoolVector2Array( 32, -32, 32, 32, -32, 32, -32, -32 )
 
 texture = ExtResource( 3 )
 
-[node name="ArmLeft" type="Line2D" parent="." index="2"]
+[node name="ArmLeft" parent="." index="2" instance=ExtResource( 4 )]
 
-points = PoolVector2Array( 0, 0, -32, 0 )
-width = 4.0
-default_color = Color( 0, 0, 1, 1 )
-texture_mode = -1094713346
-sharp_limit = 2.0
-round_precision = 8
-_sections_unfolded = [ "Capping", "Fill" ]
+ARM_SIDE = "left"
+MIN_FORCE = 200.0
+MAX_FORCE = 2000.0
 
-[node name="ArmRight" type="Line2D" parent="." index="3"]
+[node name="ArmRight" parent="." index="3" instance=ExtResource( 4 )]
 
-points = PoolVector2Array( 0, 0, 32, 0 )
-width = 4.0
-default_color = Color( 1, 0, 0, 1 )
-texture_mode = -1094713346
-sharp_limit = 2.0
-round_precision = 8
-_sections_unfolded = [ "Capping", "Fill" ]
+ARM_SIDE = "right"
+MIN_FORCE = 200.0
+MAX_FORCE = 2000.0
 
-[node name="Idle" parent="StateMachine" index="0" instance=ExtResource( 4 )]
-
-script = ExtResource( 5 )
-
-[node name="Move" parent="StateMachine" index="1" instance=ExtResource( 4 )]
+[node name="Idle" parent="StateMachine" index="0" instance=ExtResource( 5 )]
 
 script = ExtResource( 6 )
 
-[node name="Airborne" parent="StateMachine" index="2" instance=ExtResource( 4 )]
+[node name="Move" parent="StateMachine" index="1" instance=ExtResource( 5 )]
 
 script = ExtResource( 7 )
 
-[node name="Jumping" parent="StateMachine" index="3" instance=ExtResource( 4 )]
+[node name="Airborne" parent="StateMachine" index="2" instance=ExtResource( 5 )]
 
 script = ExtResource( 8 )
 
+[node name="Jumping" parent="StateMachine" index="3" instance=ExtResource( 5 )]
 
+script = ExtResource( 9 )
