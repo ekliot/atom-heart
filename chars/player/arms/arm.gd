@@ -41,7 +41,7 @@ export (Vector2) var ANCHOR_POS = Vector2(0.0, 0.0)
 export (float) var MIN_FORCE = 200.0
 export (float) var MAX_FORCE = 2000.0
 
-onready var ACTION = 'attack_%s' % arm.ARM_SIDE
+onready var ACTION = 'attack_%s' % ARM_SIDE
 
 func _ready():
   if SPRITE_FRAMES:

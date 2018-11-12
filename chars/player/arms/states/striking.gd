@@ -4,8 +4,8 @@ filename: striking.gd
 
 extends './arm_state.gd'
 
-func _on_enter(last_state=null, state_data={}):
-  return ._on_enter(last_state)
+func _on_enter(state_data={}, last_state=null):
+  return ._on_enter(state_data, last_state)
 
 func _on_leave():
   return ._on_leave()

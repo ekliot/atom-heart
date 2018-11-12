@@ -23,22 +23,22 @@ func animate(state):
   play(ani_name)
 
 
-func set_angle(angle):
+func set_angle(dir):
   """
   takes a vector, or a float representing radians, and converts it to an angle
   matching animation names
   """
   if typeof(dir) is TYPE_VECTOR2:
-    angle = dir.angle()
+    dir = dir.angle()
 
-  var degrees = rad2deg(angle)
+  var degrees = rad2deg(dir)
   degrees = stepify(degrees, 45.0)
 
   # convert degrees to angles CCW from x-axis
   if degrees < 0:
     degrees = 360 - abs(degrees)
 
-  self.angle = degrees # set the degrees to a cardinal direction
+  angle = degrees # set the degrees to a cardinal direction
 
 func get_angle():
-  return self.angle
+  return angle

@@ -44,11 +44,11 @@ func reset_charge():
   set_charge(0.0)
 
 func charge_up(delta):
-  new_charge = current_charge + delta * CHARGE_RATE
+  var new_charge = current_charge + delta * CHARGE_RATE
   set_charge(new_charge)
 
 func set_charge(charge):
   charge = clamp(charge, 0.0, MAX_CHARGE)
-  _charge = current_charge
+  var old_charge = current_charge
   current_charge = charge
-  emit_signal('charge_change', _charge, charge, charge - _charge)
+  emit_signal('charge_change', old_charge, charge, charge - old_charge)
