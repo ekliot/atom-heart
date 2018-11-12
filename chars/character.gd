@@ -23,11 +23,10 @@ onready var FSM = $StateMachine
 --- Physics constants
 """
 
-var MAX_VEL = Vector2(200.0, -1.0)
-var MIN_VEL = Vector2(40.0, -1.0)
-var ACCEL   = Vector2(40.0, PHYSICS.GRAVITY) setget ,get_acceleration
+var MAX_VEL = Vector2(400.0, -1.0)
+var MIN_VEL = Vector2(20.0, -1.0)
+var ACCEL   = Vector2(80.0, PHYSICS.GRAVITY) setget ,get_acceleration
 var AIR_ACCEL_MOD = 0.4 setget ,get_air_accel_mod
-export (float) var JUMP_FORCE = 200.0 setget ,get_jump_force
 
 """
 --- Gameplay constants
@@ -137,9 +136,6 @@ func get_friction():
     friction = PHYSICS.FRICTION_AIR
 
   return max(min(friction, 1.0), 0.0)
-
-func get_jump_force():
-  return JUMP_FORCE
 
 func get_move_data():
   return {

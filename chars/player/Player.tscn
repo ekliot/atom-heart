@@ -56,5 +56,3 @@ script = ExtResource( 7 )
 [node name="Jumping" parent="StateMachine" index="3" instance=ExtResource( 4 )]
 
 script = ExtResource( 8 )
-
-

@@ -24,9 +24,9 @@ func update_velocity(vel=player.get_velocity(), accel=player.ACCEL, h_dir=player
   vel += accel
   return vel
 
-func jump(vel):
+func jump(vel, jump_force):
   """
   return a velocity vector with player jump velocity applied
   """
-  vel.y -= player.JUMP_FORCE
+  vel.y -= jump_force
   return vel
