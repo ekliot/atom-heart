@@ -7,7 +7,7 @@ a collection of physics constants and helper methods
 extends Node
 
 const FRICTION_AIR = 0.3
-const GRAVITY = 20.0
+const GRAVITY = 25.0
 const UP = Vector2(0, -1)
 
 
@@ -35,7 +35,5 @@ func cap_velocity(vel, cap): #, friction=null):
   # else:
   vel.x = min(max(vel.x, -cap.x), cap.x)
   vel.y = min(max(vel.y, -cap.y), cap.y)
-
-  LOGGER.debug(self, "%s > %s" % [cap, vel])
 
   return vel

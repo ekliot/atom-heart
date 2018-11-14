@@ -12,8 +12,6 @@ charge_inc
 point
 """
 
-const _ARM_SPRITE_ = preload("res://chars/player/arms/arm_sprite.gd")
-
 """
 === PROPERTIES
 """
@@ -41,17 +39,22 @@ export (Vector2) var ANCHOR_POS = Vector2(0.0, 0.0)
 export (float) var MIN_FORCE = 200.0
 export (float) var MAX_FORCE = 2000.0
 
+# the input action associated with this arm
 onready var ACTION = 'attack_%s' % ARM_SIDE
+
+var point_dir = Vector2(1.0, 0.0) setget, get_point_dir
+
+"""
+=== INIT
+"""
 
 func _ready():
   if SPRITE_FRAMES:
-    var sprite = _ARM_SPRITE_.new()
-    sprite.set_frames(SPRITE_FRAMES)
+    $Sprite.set_frames(SPRITE_FRAMES)
     # TODO set sprite position
-    sprite.name = "Sprite"
-    add_child(sprite)
   else:
     LOGGER.warning(self, "sprite frames not provided")
+
 
   FSM.connect('state_change', self, '_on_state_change')
   FSM.start('idle')
@@ -60,21 +63,39 @@ func _on_state_change(state_from, state_to):
   LOGGER.debug(FSM, "changed state from %s to %s" % [state_from, state_to])
 
 
+"""
+=== CORE
+"""
+
+func proportional_force(proportion):
+  # TODO make non-linear?
+  var delta_force = MAX_FORCE - MIN_FORCE
+  var force = delta_force * proportion
+  return MIN_FORCE + force
+
+
 func point_at_mouse():
-  if SPRITE_FRAMES:
-    # only Canvas nodes can get global mouse mosition
-    var mouse_pos = get_sprite().get_global_mouse_position()
-    point_at(mouse_pos)
+  # only Canvas nodes can get global mouse mosition
+  var mouse_pos = get_sprite().get_global_mouse_position()
+  point_at(mouse_pos)
 
 func point_at(pos):
   if SPRITE_FRAMES:
-    # TODO convert ANCHOR_POS to global coords
-    var dir = (pos - get_global_anchor_pos())
-    $Sprite.set_angle(dir)
+    point_dir = pos - get_global_anchor_pos()
+    $Sprite.set_angle(point_dir.angle())
+  else:
+    point_dir = pos - get_parent().get_node("Body").global_position
+  point_dir = point_dir.normalized()
+
+"""
+=== HELPERS
+"""
 
 func get_sprite():
-  if SPRITE_FRAMES:
-    return $Sprite
+  return $Sprite
 
-func get_global_root_pos():
-  return self.global_position + ANCHOR_POS
+func get_global_anchor_pos():
+  return $Sprite.global_position + ANCHOR_POS
+
+func get_point_dir():
+  return point_dir

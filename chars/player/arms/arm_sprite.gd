@@ -8,7 +8,7 @@ const ANI_NAME_FMT = "%s_%d"
 
 var angle = 0 setget set_angle,get_angle
 
-func animate(state):
+func animate(state, args=null):
   """
   we want each arm to be able to animate in multiple directions:
     - [0, 45, 90, 135, 180, 225, 270, 315] degrees
@@ -25,12 +25,8 @@ func animate(state):
 
 func set_angle(dir):
   """
-  takes a vector, or a float representing radians, and converts it to an angle
-  matching animation names
+  takes a float representing radians, and converts it to an angle matching animation names
   """
-  if typeof(dir) is TYPE_VECTOR2:
-    dir = dir.angle()
-
   var degrees = rad2deg(dir)
   degrees = stepify(degrees, 45.0)
 

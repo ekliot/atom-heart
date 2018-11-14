@@ -1,12 +1,13 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://chars/player/arms/arm.gd" type="Script" id=1]
-[ext_resource path="res://util/states/StateMachine.tscn" type="PackedScene" id=2]
-[ext_resource path="res://util/states/State.tscn" type="PackedScene" id=3]
-[ext_resource path="res://chars/player/arms/states/idle.gd" type="Script" id=4]
-[ext_resource path="res://chars/player/arms/states/charging.gd" type="Script" id=5]
-[ext_resource path="res://chars/player/arms/states/firing.gd" type="Script" id=6]
-[ext_resource path="res://chars/player/arms/states/striking.gd" type="Script" id=7]
+[ext_resource path="res://chars/player/arms/ArmSprite.tscn" type="PackedScene" id=2]
+[ext_resource path="res://util/states/StateMachine.tscn" type="PackedScene" id=3]
+[ext_resource path="res://util/states/State.tscn" type="PackedScene" id=4]
+[ext_resource path="res://chars/player/arms/states/idle.gd" type="Script" id=5]
+[ext_resource path="res://chars/player/arms/states/charging.gd" type="Script" id=6]
+[ext_resource path="res://chars/player/arms/states/firing.gd" type="Script" id=7]
+[ext_resource path="res://chars/player/arms/states/striking.gd" type="Script" id=8]
 
 [node name="Arm" type="Node" index="0"]
 
@@ -17,23 +18,27 @@ ANCHOR_POS = Vector2( 0, 0 )
 MIN_FORCE = 200.0
 MAX_FORCE = 2000.0
 
-[node name="StateMachine" parent="." index="0" instance=ExtResource( 2 )]
+[node name="Sprite" parent="." index="0" instance=ExtResource( 2 )]
 
-[node name="Idle" parent="StateMachine" index="0" instance=ExtResource( 3 )]
+[node name="StateMachine" parent="." index="1" instance=ExtResource( 3 )]
 
-script = ExtResource( 4 )
-
-[node name="Charging" parent="StateMachine" index="1" instance=ExtResource( 3 )]
+[node name="Idle" parent="StateMachine" index="0" instance=ExtResource( 4 )]
 
 script = ExtResource( 5 )
-MAX_CHARGE = 10.0
 
-[node name="Firing" parent="StateMachine" index="2" instance=ExtResource( 3 )]
+[node name="Charging" parent="StateMachine" index="1" instance=ExtResource( 4 )]
 
 script = ExtResource( 6 )
+MAX_CHARGE = 10.0
+CHARGE_RATE = 1.0
+STRIKE_THRESH = 0.0666667
 
-[node name="Striking" parent="StateMachine" index="3" instance=ExtResource( 3 )]
+[node name="Firing" parent="StateMachine" index="2" instance=ExtResource( 4 )]
 
 script = ExtResource( 7 )
+
+[node name="Striking" parent="StateMachine" index="3" instance=ExtResource( 4 )]
+
+script = ExtResource( 8 )
 
 

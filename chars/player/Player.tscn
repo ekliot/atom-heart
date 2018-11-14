@@ -10,7 +10,7 @@
 [ext_resource path="res://chars/player/states/motion/airborne.gd" type="Script" id=8]
 [ext_resource path="res://chars/player/states/motion/jumping.gd" type="Script" id=9]
 
-[node name="Player" index="0" instance=ExtResource( 1 )]
+[node name="Player" instance=ExtResource( 1 )]
 
 script = ExtResource( 2 )
 JUMP_FORCE = 200.0
@@ -27,14 +27,10 @@ texture = ExtResource( 3 )
 [node name="ArmLeft" parent="." index="2" instance=ExtResource( 4 )]
 
 ARM_SIDE = "left"
-MIN_FORCE = 200.0
-MAX_FORCE = 2000.0
 
 [node name="ArmRight" parent="." index="3" instance=ExtResource( 4 )]
 
 ARM_SIDE = "right"
-MIN_FORCE = 200.0
-MAX_FORCE = 2000.0
 
 [node name="Idle" parent="StateMachine" index="0" instance=ExtResource( 5 )]
 
@@ -51,3 +47,5 @@ script = ExtResource( 8 )
 [node name="Jumping" parent="StateMachine" index="3" instance=ExtResource( 5 )]
 
 script = ExtResource( 9 )
+
+
