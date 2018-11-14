@@ -1,6 +1,7 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://chars/player/arms/arm_sprite.gd" type="Script" id=1]
+[ext_resource path="res://src/chars/player/arms/arm_sprite.gd" type="Script" id=1]
+
 
 [node name="Sprite" type="AnimatedSprite" index="0"]
 

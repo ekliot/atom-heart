@@ -2,7 +2,7 @@
 filename: player_state.gd
 """
 
-extends "res://util/states/state.gd"
+extends "res://src/util/states/state.gd"
 
 var player = null
 

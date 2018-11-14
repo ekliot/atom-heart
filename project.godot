@@ -11,14 +11,14 @@ config_version=3
 [application]
 
 config/name="atom-heart"
-run/main_scene="res://levels/Level1.tscn"
-config/icon="res://icon.png"
+run/main_scene="res://src/levels/Level1.tscn"
+config/icon="res://src/icon.png"
 
 [autoload]
 
-PHYSICS="*res://physics.gd"
-LOGGER="*res://util/logger.gd"
-GM="*res://gamemaster.gd"
+PHYSICS="*res://src/physics.gd"
+LOGGER="*res://src/util/logger.gd"
+GM="*res://src/gamemaster.gd"
 
 [input]
 
@@ -29,4 +29,4 @@ attack_right=[ Object(InputEventMouseButton,"resource_local_to_scene":false,"res
 
 [rendering]
 
-environment/default_environment="res://default_env.tres"
+environment/default_environment="res://src/default_env.tres"
