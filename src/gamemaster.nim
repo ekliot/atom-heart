@@ -13,10 +13,11 @@ gdobj GameMaster of Node:
   method init*() =
     add_user_signal("player_set", "player")
 
-  proc set_player(p: Player) {.gdExport} =
-    if p isnil:
+  proc set_player(p: Player) =
+    # NIMIFY `if p:` works here?
+    if p == nil:
       player = p
       emit_signal("player_set", player)
 
-  proc get_player(): Player {.gdExport} =
+  proc get_player(): Player =
     result = player

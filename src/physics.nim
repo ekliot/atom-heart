@@ -12,7 +12,6 @@ gdobj Physics of Node:
   proc apply_friction_flt(flt, friction: float, to = 0.0): float =
     result = lerp(flt, to, friction)
 
-
   proc apply_friction_vec(vec: vector2, friction:float, to: vector2 = vector2()): vector2 =
     result = vector2(
       apply_friction_flt(vec.x, friction, to.x),

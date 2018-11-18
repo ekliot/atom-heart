@@ -22,7 +22,7 @@ gdobj Character of KinematicBody2D:
 
   let MaxVel: vector2 = vector2(400.0, -1.0)
   let MinVel: vector2 = vector2(20.0, -1.0)
-  let Accel: vector2  = vector2(80.0, Physics.Gravity)
+  let Accel:  vector2 = vector2(80.0, Physics.Gravity)
   let AirAccelMod: float = 0.4
 
   ##[
@@ -63,7 +63,7 @@ gdobj Character of KinematicBody2D:
   === CORE
   ]##
 
-  proc apply_velocity*(vel = velocity, up = Physics.Up) {.gdExport} =
+  proc apply_velocity(vel = velocity, up = Physics.Up) =
     ## move the character by its current (default), or arbitrary, velocity
 
     let pos: vector2 = get_position()
@@ -73,7 +73,7 @@ gdobj Character of KinematicBody2D:
     if pos != cur_pos:
       emit_signal("update_position", pos, cur_pos)
 
-  proc push_me*(accel: float, dir: vector2, up = Physics.Up) {.gdExport} =
+  proc push_me(accel: float, dir: vector2, up = Physics.Up) =
     ## apply an impulse to the character's current velocity
 
     let pos: vector2 = get_position()
@@ -84,7 +84,7 @@ gdobj Character of KinematicBody2D:
     if pos != cur_pos:
       emit_signal("update_position", pos, cur_pos)
 
-  proc animate*(anim_name: string) {.gdExport} =
+  proc animate(anim_name: string) =
     ## TODO
     discard
 
@@ -99,33 +99,33 @@ gdobj Character of KinematicBody2D:
   === HELPERS
   ]##
 
-  proc is_airborne*(): bool {.gdExport} =
+  proc is_airborne(): bool =
     result = not is_on_floor() and not is_on_wall()
 
   ##[
   --- Physics Set/Getters
   ]##
 
-  proc get_velocity*(): vector2 {.gdExport} =
+  proc get_velocity(): vector2 =
     result = velocity
 
-  proc get_max_velocity*(): float {.gdExport} =
+  proc get_max_velocity(): float =
     result = MaxVel
 
-  proc get_velocity_flat*(): vector2 {.gdExport} =
+  proc get_velocity_flat(): vector2 =
     result = velocity.abs().floor()
 
-  proc get_acceleration*(): float {.gdExport} =
-    var accel = Accel
+  proc get_acceleration(): vector2 =
+    var accel: vector2 = Accel
     if is_airborne():
       # NIMIFY is *= a valid op?
       accel.x *= AirAccelMod
     result = accel
 
-  proc get_air_accel_mod*(): float {.gdExport} =
+  proc get_air_accel_mod(): float =
     result = AIR_ACCEL_MOD
 
-  proc get_friction*(): float {.gdExport} =
+  proc get_friction(): float =
     ## gets the friction applied to the KB at this moment in time
 
     var friction = 0
@@ -150,7 +150,7 @@ gdobj Character of KinematicBody2D:
   --- Control Set/Getters
   ]##
 
-  proc get_h_dir*(): int {.gdExport} =
+  proc get_h_dir(): int =
     ## Returns the player movement as a horizontal direction value
     ## To be overridden in extending classes
     ##   *  1 => right
@@ -158,5 +158,5 @@ gdobj Character of KinematicBody2D:
     ##   * -1 => left
     result = 0
 
-  proc get_look_dir*(): vector2 {.gdExport} =
+  proc get_look_dir(): vector2 =
     result = look_dir

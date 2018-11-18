@@ -23,7 +23,7 @@ gdobj Player of Character:
       # lookat_mouse()
       discard
 
-  proc get_h_dir(): int {.gdExport} =
+  proc get_h_dir(): int =
     ##
     var left: bool = input.is_action_pressed("ui_left")
     var right: bool = input.is_action_pressed("ui_right")
@@ -34,8 +34,9 @@ gdobj Player of Character:
   === HELPERS
   ]##
 
-  proc get_arm(side: string): Arm {.gdExport} =
-    case side.to_upper()[0]:
+  proc get_arm(side: string): Arm =
+    let first_letter: char = side.to_upper()[0]
+    case first_letter:
     of 'L':
       result = get_node("ArmLeft")
     of 'R':
