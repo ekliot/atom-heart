@@ -10,7 +10,7 @@ config_version=3
 
 [application]
 
-config/name="atom-heart"
+config/name="Atom Heart"
 run/main_scene="res://src/levels/Level1.tscn"
 config/icon="res://src/icon.png"
 
