@@ -10,7 +10,11 @@ extends "res://src/chars/character.gd"
 
 func _ready():
   GM.PLAYER = self
-  # ._ready()
+
+  $PlayerCamera.set_player_pos(get_position())
+  # connect('update_position', self, '_on_move')
+  connect('update_position', $PlayerCamera, '_on_player_move')
+
 
 func _input( ev ):
   if ev is InputEventMouseMotion:

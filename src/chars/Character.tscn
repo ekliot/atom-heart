@@ -3,8 +3,6 @@
 [ext_resource path="res://src/chars/character.gd" type="Script" id=1]
 [ext_resource path="res://src/util/states/StateMachine.tscn" type="PackedScene" id=2]
 
-
-
 [node name="Character" type="KinematicBody2D"]
 
 input_pickable = false
@@ -12,6 +10,7 @@ collision_layer = 1
 collision_mask = 1
 collision/safe_margin = 0.08
 script = ExtResource( 1 )
+MAX_HEALTH = 10
 
 [node name="Collider" type="CollisionPolygon2D" parent="." index="0"]
 
