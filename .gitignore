@@ -1,3 +1,11 @@
+# Godot specific
 .import/
 export.cfg
 export_presets.cfg
+
+# Godot-Nim
+_dlls
+_godotapi
+nimcache
+.nimcache
+nakefile
