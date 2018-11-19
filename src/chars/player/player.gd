@@ -10,7 +10,11 @@ extends "res://src/chars/character.gd"
 
 func _ready():
   GM.PLAYER = self
-  # ._ready()
+
+  $PlayerCamera.set_player_pos(get_position())
+  # connect('update_position', self, '_on_move')
+  connect('update_position', $PlayerCamera, '_on_player_move')
+
 
 func _input( ev ):
   if ev is InputEventMouseMotion:
@@ -22,8 +26,8 @@ func _input( ev ):
     pass
 
 func get_h_dir():
-  var l = Input.is_action_pressed("ui_left")
-  var r = Input.is_action_pressed("ui_right")
+  var l = Input.is_action_pressed("ui_left") || Input.is_action_pressed("move_left")
+  var r = Input.is_action_pressed("ui_right") || Input.is_action_pressed("move_right")
   return int(r) - int(l)
 
 

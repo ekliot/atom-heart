@@ -15,7 +15,7 @@ func _on_enter(state_data, last_state):
   return ._on_enter(state_data, last_state)
 
 func _physics_update(delta):
-  if Input.is_action_just_pressed("ui_up"):
+  if Input.is_action_just_pressed("move_jump"):
     return 'jumping'
 
   if not player.is_on_floor():
