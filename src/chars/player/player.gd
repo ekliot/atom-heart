@@ -2,7 +2,7 @@
 filename: player.gd
 """
 
-extends "res://chars/character.gd"
+extends "res://src/chars/character.gd"
 
 """
 ==== CORE
