@@ -7,6 +7,7 @@ from chars import character
 from chars.player.arms import arm
 
 gdobj Player of Character:
+
   ##[
   === CORE
   ]##
@@ -14,8 +15,8 @@ gdobj Player of Character:
   method ready*() =
     GM.set_player(self)
 
-  method input*(ev:input_event) =
-    if ev is input_event_mouse_motion:
+  method input*(ev: InputEvent) =
+    if ev of InputEventMouseButton:
       # NOTE get_global_mouse_position() gets the cursor's world-coords,
       # but is only available from CanvasItems
       # this is in favour of ev.get_position() or ev.get_global_position(), which
@@ -25,8 +26,8 @@ gdobj Player of Character:
 
   proc get_h_dir(): int =
     ##
-    var left: bool = input.is_action_pressed("ui_left")
-    var right: bool = input.is_action_pressed("ui_right")
+    var left: bool = Input.is_action_pressed("ui_left")
+    var right: bool = Input.is_action_pressed("ui_right")
     result = int(right) - int(left)
 
 
