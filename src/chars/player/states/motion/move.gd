@@ -22,7 +22,7 @@ func _update(delta):
   return ._update(delta)
 
 func _physics_update(delta):
-  if Input.is_action_just_pressed("ui_up"):
+  if Input.is_action_just_pressed("move_jump"):
     return "jumping"
 
   # if player.is_on_wall():

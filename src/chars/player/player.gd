@@ -22,8 +22,8 @@ func _input( ev ):
     pass
 
 func get_h_dir():
-  var l = Input.is_action_pressed("ui_left")
-  var r = Input.is_action_pressed("ui_right")
+  var l = Input.is_action_pressed("ui_left") || Input.is_action_pressed("move_left")
+  var r = Input.is_action_pressed("ui_right") || Input.is_action_pressed("move_right")
   return int(r) - int(l)
 
 
