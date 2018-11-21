@@ -32,6 +32,7 @@ export (String, 'left', 'right') var ARM_SIDE
 export (SpriteFrames) var SPRITE_FRAMES = null
 # where the shoulder is located, relative to self
 export (Vector2) var ANCHOR_POS = Vector2(0.0, 0.0)
+export (Vector2) var FIRING_POS = Vector2(0.0, 0.0)
 
 """
 --- Mechanical constants
