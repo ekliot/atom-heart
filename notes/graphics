@@ -1,0 +1,10 @@
+Animate each arm in 8 dirs, on both sides for the following states:
+  charge
+  fire
+  strike
+Animate torso in airborne state in 8 dirs
+
+Movement trail particles
+Blast collision particles
+Blast blowback on collision
+Freeze frame/slow-down on large damage/high charge
