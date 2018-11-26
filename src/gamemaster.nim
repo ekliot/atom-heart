@@ -9,16 +9,12 @@ import
 import chars.player.player
 
 gdobj GameMaster of Node:
-  var player:Player = nil
+  var PLAYER*:Player = nil
 
   method init*() =
     add_user_signal("player_set", "player")
 
-  proc set_player(p: Player) =
-    # NIMIFY `if p:` works here?
-    if p.isNil:
-      player = p
-      emit_signal("player_set", player)
-
-  proc get_player(): Player =
-    result = player
+  proc set_player*(p: Player) {.gdExport.} =
+    if is_nil PLAYER:
+      PLAYER = p
+      emit_signal("player_set", PLAYER)

@@ -2,7 +2,8 @@
 A player-controlled extension of the core Character class
 ]##
 
-import godot
+import
+  godot, input
 import chars.character
 import arms.arm
 
@@ -13,6 +14,7 @@ gdobj Player of Character:
   ]##
 
   method ready*() =
+    # NIMIFY can the GM singleton be accessed like this?
     GM.set_player(self)
 
   method input*(ev: InputEvent) =
@@ -24,18 +26,19 @@ gdobj Player of Character:
       # lookat_mouse()
       discard
 
-  proc get_h_dir(): int =
-    ##
-    var left: bool = Input.is_action_pressed("ui_left")
-    var right: bool = Input.is_action_pressed("ui_right")
-    result = int(right) - int(left)
-
 
   ##[
   === HELPERS
   ]##
 
-  proc get_arm(side: string): Arm =
+  proc get_h_dir*(): int {.gdExport.} =
+    ##
+    var left: bool = Input.is_action_pressed("ui_left")
+    var right: bool = Input.is_action_pressed("ui_right")
+    result = int(right) - int(left)
+
+  proc get_arm*(side: string): Arm {.gdExport.} =
+    # NIMIFY better way?
     let first_letter: char = side.to_upper()[0]
     case first_letter:
     of 'L':
