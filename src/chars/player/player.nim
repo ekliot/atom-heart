@@ -3,8 +3,8 @@ A player-controlled extension of the core Character class
 ]##
 
 import godot
-from chars import character
-from chars.player.arms import arm
+import chars.character
+import arms.arm
 
 gdobj Player of Character:
 

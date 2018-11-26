@@ -1,3 +1,6 @@
+# VS Code
+.vscode
+
 # Godot specific
 .import/
 export.cfg

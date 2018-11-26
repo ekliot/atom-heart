@@ -8,5 +8,3 @@ when not defined(release):
 
 import gamemaster
 import physics
-import fpscounter
-import mainpanel

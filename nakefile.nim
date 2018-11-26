@@ -70,3 +70,6 @@ task "clean", "Remove files produced by build":
   removeDir("_godotapi")
   removeDir("_dlls")
   removeFile("nakefile")
+
+task "sandbox", "nim testing ground":
+  echo "sandbox"

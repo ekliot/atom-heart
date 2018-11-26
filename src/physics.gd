@@ -11,12 +11,12 @@ const GRAVITY = 25.0
 const UP = Vector2(0, -1)
 
 
-func apply_friction_flt(flt, friction, to=0.0):
+func apply_friction_to_flt(flt, friction, to=0.0):
   return lerp(flt, to, friction)
 
-func apply_friction_vec(vec, friction, to=Vector2()):
-  return Vector2(apply_friction_flt(vec.x, friction, to.x),
-                 apply_friction_flt(vec.y, friction, to.y))
+func apply_friction_to_vec(vec, friction, to=Vector2()):
+  return Vector2(apply_friction_to_flt(vec.x, friction, to.x),
+                 apply_friction_to_flt(vec.y, friction, to.y))
 
 func cap_velocity(vel, cap): #, friction=null):
   if cap.x < 0:
@@ -27,11 +27,11 @@ func cap_velocity(vel, cap): #, friction=null):
   # if friction:
   #   if abs(vel.x) > abs(cap.x):
   #     var x_dir = sign(vel.x)
-  #     vel.x = apply_friction_flt(vel.x, friction, x_dir * cap.x)
+  #     vel.x = apply_friction_to_flt(vel.x, friction, x_dir * cap.x)
   #
   #   if abs(vel.y) > abs(cap.y):
   #     var y_dir = sign(vel.y)
-  #     vel.y = apply_friction_flt(vel.y, friction, y_dir * cap.y)
+  #     vel.y = apply_friction_to_flt(vel.y, friction, y_dir * cap.y)
   # else:
   vel.x = min(max(vel.x, -cap.x), cap.x)
   vel.y = min(max(vel.y, -cap.y), cap.y)

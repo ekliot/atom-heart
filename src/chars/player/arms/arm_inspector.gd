@@ -39,7 +39,7 @@ func _set_data(arm, data):
 func _get_arm_data(arm, key):
   match(key):
     'State':
-      return arm.FSM.get_active_id()
+      return arm.FSM.get_active_id()  # NIMIFY to FSM.active
     'Angle':
       var dir = arm.point_dir.reflect(Vector2(1.0, 0.0))
       var angle = rad2deg(dir.angle())

@@ -30,7 +30,7 @@ func _physics_update(delta):
     var _vel = player.velocity
 
     _vel = update_velocity(_vel, Vector2(0.0, PHYSICS.GRAVITY))
-    _vel = PHYSICS.apply_friction_vec(_vel, player.get_friction())
+    _vel = PHYSICS.apply_friction_to_vec(_vel, player.get_friction())
 
     player.apply_velocity(_vel)
   else:
