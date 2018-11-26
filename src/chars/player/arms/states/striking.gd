@@ -16,11 +16,11 @@ func _on_enter(state_data={}, last_state=null):
 func _on_leave():
   return ._on_leave()
 
-func _update(delta):
-  return ._update(delta)
+func _process(delta):
+  return ._process(delta)
 
-func _physics_update(delta):
-  # return ._physics_update(delta)
+func _on_physics_process(delta):
+  # return ._on_physics_process(delta)
   return 'idle'
 
 func _on_animation_finished(sprite):

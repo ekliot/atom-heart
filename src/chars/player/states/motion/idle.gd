@@ -14,7 +14,7 @@ func _on_enter(state_data, last_state):
   # fsm.host.animate(ID + move_dir_as_str())
   return ._on_enter(state_data, last_state)
 
-func _physics_update(delta):
+func _on_physics_process(delta):
   if Input.is_action_just_pressed("ui_up"):
     return 'jumping'
 
@@ -37,4 +37,4 @@ func _physics_update(delta):
     # short circuit the last fractions of lerping velocity
     player.velocity = Vector2()
 
-  return ._physics_update(delta)
+  return ._on_physics_process(delta)

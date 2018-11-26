@@ -18,12 +18,12 @@ var current_charge = 0.0
 func _on_enter(state_data={}, last_state=null):
   reset_charge()
   # set animation? or is this handled by the arm_sprite, independently?
-  return ._on_enter(state_data, last_state)
+  return .on_enter(state_data, last_state)
 
 func _on_leave():
-  return ._on_leave()
+  return .on_leave()
 
-func _physics_update(delta):
+func _on_physics_process(delta):
   arm.point_at_mouse()
 
   if Input.is_action_just_released(arm.ACTION):
@@ -37,7 +37,7 @@ func _physics_update(delta):
 
   charge_up(delta)
 
-  return ._physics_update(delta)
+  return ._on_physics_process(delta)
 
 # func _on_animation_finished(ani_name):
 #   return ._on_animation_finished(ani_name)

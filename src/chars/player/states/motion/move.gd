@@ -14,14 +14,14 @@ func _on_enter(state_data, last_state):
   # player.animate(ID + move_dir_as_str())
   return ._on_enter(state_data, last_state)
 
-func _update(delta):
+func _process(delta):
   # var interruptor = check_interrupts()
   # if interruptor:
   #   return interruptor
 
-  return ._update(delta)
+  return ._process(delta)
 
-func _physics_update(delta):
+func _on_physics_process(delta):
   if Input.is_action_just_pressed("ui_up"):
     return "jumping"
 
@@ -42,7 +42,7 @@ func _physics_update(delta):
   if not player.velocity.x:
     return FSM.START_STATE
 
-  return ._physics_update(delta)
+  return ._on_physics_process(delta)
 
 
 """
