@@ -1,0 +1,33 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../_toolbox"
+		}
+	],
+	"settings": {
+		"nim.project": [
+			"atom_heart.nim"
+		],
+		"todo-tree.tags": [
+			"TODO",
+			"FIXME",
+			"HACK",
+			"XXX",
+			"COMBAK",
+			"DEV",
+			"NIMIFY"
+		],
+		"todo-tree.customHighlight": {
+			"TODO": {},
+			"FIXME": {},
+			"HACK": {},
+			"XXX": {},
+			"COMBAK": {},
+			"DEV": {},
+			"NIMIFY": {}
+		}
+	}
+}
