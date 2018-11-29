@@ -4,7 +4,7 @@ Common methods and attributes of kinematic characters
 
 import
   godot, physics
-import util.states.state_machine
+import util.states.states
 
 gdobj Character of KinematicBody2D:
 
