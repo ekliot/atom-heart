@@ -46,11 +46,11 @@ func _on_physics_process(delta):
 func move_step(h_dir, delta):
   var _vel = player.velocity
 
-  if Input.is_action_pressed('ui_up') and jump_time < MAX_JUMP_TIME and not jumped:
+  if Input.is_action_pressed('move_jump') and jump_time < MAX_JUMP_TIME and not jumped:
     var force = JUMP_FORCE if jump_time > 0.0 else JUMP_IMPULSE
     _vel = jump(player.velocity, force)
     jump_time += delta
-  elif Input.is_action_just_released('ui_up') or jump_time >= MAX_JUMP_TIME:
+  elif Input.is_action_just_released('move_jump') or jump_time >= MAX_JUMP_TIME:
     jumped = true
 
   _vel = update_velocity(_vel)

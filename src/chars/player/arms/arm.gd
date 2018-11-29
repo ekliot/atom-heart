@@ -32,12 +32,13 @@ export (String, 'left', 'right') var ARM_SIDE
 export (SpriteFrames) var SPRITE_FRAMES = null
 # where the shoulder is located, relative to self
 export (Vector2) var ANCHOR_POS = Vector2(0.0, 0.0)
+export (Vector2) var FIRING_POS = Vector2(0.0, 0.0)
 
 """
 --- Mechanical constants
 """
 export (float) var MIN_FORCE = 200.0
-export (float) var MAX_FORCE = 2000.0
+export (float) var MAX_FORCE = 800.0
 
 # the input action associated with this arm
 onready var ACTION = 'attack_%s' % ARM_SIDE

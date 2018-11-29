@@ -22,7 +22,7 @@ func _process(delta):
   return ._process(delta)
 
 func _on_physics_process(delta):
-  if Input.is_action_just_pressed("ui_up"):
+  if Input.is_action_just_pressed("move_jump"):
     return "jumping"
 
   # if player.is_on_wall():
