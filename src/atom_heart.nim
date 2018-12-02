@@ -8,3 +8,4 @@ when not defined(release):
 
 import gamemaster
 import physics
+import logger
