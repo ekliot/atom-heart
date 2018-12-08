@@ -1,6 +1,8 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://src/chars/player/arms/arm_inspector.gd" type="Script" id=1]
+[ext_resource path="res://src/ui/hud/arm_inspector.gd" type="Script" id=1]
+
+
 
 [node name="ArmInspector" type="PanelContainer" index="0"]
 
