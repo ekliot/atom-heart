@@ -23,7 +23,7 @@ func _on_enter(state_data={}, last_state=null):
 func _on_leave():
   return ._on_leave()
 
-func _physics_update(delta):
+func _on_physics_process(delta):
   arm.point_at_mouse()
 
   if Input.is_action_just_released(arm.ACTION):
@@ -32,12 +32,11 @@ func _physics_update(delta):
     else:
       return fire()
   elif current_charge >= MAX_CHARGE:
-    print('yo')
     return fire()
 
   charge_up(delta)
 
-  return ._physics_update(delta)
+  return ._on_physics_process(delta)
 
 # func _on_animation_finished(ani_name):
 #   return ._on_animation_finished(ani_name)

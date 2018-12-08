@@ -25,7 +25,7 @@ func _on_enter(state_data, last_state):
   jump_time = 0.0
   return ._on_enter(state_data, last_state)
 
-func _physics_update(delta):
+func _on_physics_process(delta):
   var h_dir = player.get_h_dir()
 
   if player.is_on_wall():
@@ -36,7 +36,7 @@ func _physics_update(delta):
   if player.velocity.y > 0:
     return 'airborne'
 
-  return ._physics_update(delta)
+  return ._on_physics_process(delta)
 
 
 """
