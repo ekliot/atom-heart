@@ -1,14 +1,7 @@
-"""
-filename: blast.gd
-"""
-
-"""
-DOC DUMP
-
 What I want to do:
   when a player fires a blast, the blast size is variable (longer charge=bigger blast)
   that means that a blast cone/area needs to be created dynamically
-  ADDITONALLY
+  ADDITIONALLY
   a blast can be blocked by, say, a floor
   in this case, the blast cone needs to extend only until the floor
   excess area is dispersed to the sides as blowback
@@ -45,9 +38,12 @@ DUMB IDEA AHEAD:
   When firing, turn on the light, which has a texture. Adjust the H/W of the box to adjust the arc
 
   THIS ONLY SOLVES THE VISUAL ELEMENT. HOW DO WE KNOW WHAT IS COVERED BY THE LIGHT?
-"""
 
-""" NAIVE, HALF-BAKED INITIAL IMPLEMENTATION BELOW SAVED FOR POSTERITY
+###########
+
+NAIVE, HALF-BAKED INITIAL IMPLEMENTATION BELOW SAVED FOR POSTERITY
+
+
 class BlastCone
   extends Area2D
 
