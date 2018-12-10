@@ -15,8 +15,10 @@ script = ExtResource( 1 )
 ARM_SIDE = null
 SPRITE_FRAMES = null
 ANCHOR_POS = Vector2( 0, 0 )
+FIRING_POS = Vector2( 0, 0 )
 MIN_FORCE = 200.0
 MAX_FORCE = 800.0
+BLAST_ARC = 75.0
 
 [node name="Sprite" parent="." index="0" instance=ExtResource( 2 )]
 

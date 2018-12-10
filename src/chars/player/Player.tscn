@@ -36,11 +36,13 @@ texture = ExtResource( 6 )
 
 ARM_SIDE = "left"
 FIRING_POS = Vector2( 0, 0 )
+BLAST_ARC = 75.0
 
 [node name="ArmRight" parent="." index="5" instance=ExtResource( 7 )]
 
 ARM_SIDE = "right"
 FIRING_POS = Vector2( 0, 0 )
+BLAST_ARC = 75.0
 
 [node name="Idle" parent="StateMachine" index="0" instance=ExtResource( 8 )]
 

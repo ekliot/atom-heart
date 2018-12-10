@@ -97,11 +97,17 @@ func point_at(pos):
 func get_sprite():
   return $Sprite
 
+func get_sprite_global_pos():
+  if SPRITE_FRAMES:
+    return $Sprite.global_position
+  else:
+    return get_parent().get_node("Body").global_position
+
 func get_global_anchor_pos():
-  return $Sprite.global_position + ANCHOR_POS
+  return get_sprite_global_pos() + ANCHOR_POS
 
 func get_global_firing_pos():
-  return $Sprite.global_position + FIRING_POS
+  return get_sprite_global_pos() + FIRING_POS
 
 func get_point_dir():
   return point_dir

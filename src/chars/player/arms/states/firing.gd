@@ -4,7 +4,7 @@ filename: firing.gd
 
 extends './arm_state.gd'
 
-const Blast = preload("res://src/chars/player/arms/blast/blast.tscn")
+const Blast = preload("res://src/chars/player/arms/blasts/Blast.tscn")
 
 var force = 0.0
 

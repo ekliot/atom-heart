@@ -18,16 +18,15 @@ var resolution = 0
 # TODO this ought to be textures/shaders
 var colors = PoolColorArray([Color(1.0, 0.0, 0.0)])
 
-var cone_area = CollisionPolygon2D.new()
+# var cone_area = CollisionPolygon2D.new()
 var cone_path = PoolVector2Array()
 
-func _init(_orig, _dir, _dist, _arc, _res=10):
+func setup(_orig, _dir, _dist, _arc, _res=10):
   set_origin(_orig) # cone origin, a Vector2
   set_direction(_dir) # cone direction, a Vector2
   set_distance(_dist) # how long the cone is, a float
   set_arc(_arc) # provided in degrees, a float
   self.resolution = _res
-
   _build_shape()
 
 func _draw():
@@ -36,6 +35,17 @@ func _draw():
   draw_polygon(cone_path, colors)
 
 func _build_shape():
+  _build_points()
+
+  # cone_area.set_polygon(cone_path)
+
+  var shape = ConvexPolygonShape2D.new()
+  shape.set_point_cloud(cone_path)
+  $Shape.shape = shape
+
+  current = true
+
+func _build_points():
   cone_path = PoolVector2Array()
   cone_path.push_back(origin)
 
@@ -53,9 +63,6 @@ func _build_shape():
     # what is the vector location of this slice?
     var from_center = origin + dist * Vector2(cos(angle), sin(angle))
     cone_path.push_back(from_center)
-
-  cone_area.set_polygon(cone_path)
-  current = true
 
 func _update():
   if current:

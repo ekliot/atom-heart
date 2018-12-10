@@ -1,8 +1,9 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://src/chars/player/arms/blasts/blast.gd" type="Script" id=1]
+[ext_resource path="res://src/chars/player/arms/blasts/cone.gd" type="Script" id=2]
 
-[node name="Blast" type="Node" index="0"]
+[node name="Blast" type="Node"]
 
 script = ExtResource( 1 )
 
@@ -15,5 +16,8 @@ linear_damp = 0.1
 angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
+script = ExtResource( 2 )
+
+[node name="Shape" type="CollisionShape2D" parent="Cone" index="0"]
 
 
