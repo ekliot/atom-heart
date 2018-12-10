@@ -9,7 +9,7 @@ enum FACING {LEFT, RIGHT}
 const ANI_NAME_FMT = "%s_%d"
 
 var angle = 0 setget set_angle, get_angle
-var facing = FACING_LEFT setget set_facing
+var facing = FACING.LEFT setget set_facing
 
 func animate(state, args=null):
   """
@@ -28,12 +28,14 @@ func animate(state, args=null):
 
 
 func set_facing(dir):
-  if dir is Vector2:
-    facing = int((sign(dir.x) + 1) / 2)
-  elif dir is String:
-    facing = FACING_LEFT if dir[0].to_upper() == 'L' else FACING_RIGHT
-  elif dir is int and dir == FACING_LEFT or dir == FACING_RIGHT:
-    facing = dir
+  match typeof(dir):
+    TYPE_VECTOR2:
+      facing = int((sign(dir.x) + 1) / 2)
+    TYPE_STRING:
+      facing = FACING.LEFT if dir[0].to_upper() == 'L' else FACING.RIGHT
+    TYPE_INT:
+      if dir == FACING.LEFT or dir == FACING.RIGHT:
+        facing = dir
 
 
 func set_angle(dir):
