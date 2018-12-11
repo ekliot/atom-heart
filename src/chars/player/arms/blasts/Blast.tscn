@@ -3,7 +3,7 @@
 [ext_resource path="res://src/chars/player/arms/blasts/blast.gd" type="Script" id=1]
 [ext_resource path="res://src/chars/player/arms/blasts/cone.gd" type="Script" id=2]
 
-[node name="Blast" type="Node"]
+[node name="Blast" type="Node" index="0"]
 
 script = ExtResource( 1 )
 
@@ -14,10 +14,15 @@ gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
+collision_layer = 0
+collision_mask = 24
 audio_bus_override = false
 audio_bus_name = "Master"
 script = ExtResource( 2 )
+_sections_unfolded = [ "Collision", "Pickable" ]
 
 [node name="Shape" type="CollisionShape2D" parent="Cone" index="0"]
+
+disabled = true
 
 

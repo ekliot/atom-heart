@@ -15,8 +15,10 @@
 
 [node name="Player" instance=ExtResource( 1 )]
 
+collision_layer = 3
+collision_mask = 3
 script = ExtResource( 2 )
-_sections_unfolded = [ "collision" ]
+_sections_unfolded = [ "Collision", "collision" ]
 
 [node name="HUD" parent="." index="0" instance=ExtResource( 3 )]
 
@@ -35,14 +37,10 @@ texture = ExtResource( 6 )
 [node name="ArmLeft" parent="." index="4" instance=ExtResource( 7 )]
 
 ARM_SIDE = "left"
-FIRING_POS = Vector2( 0, 0 )
-BLAST_ARC = 75.0
 
 [node name="ArmRight" parent="." index="5" instance=ExtResource( 7 )]
 
 ARM_SIDE = "right"
-FIRING_POS = Vector2( 0, 0 )
-BLAST_ARC = 75.0
 
 [node name="Idle" parent="StateMachine" index="0" instance=ExtResource( 8 )]
 

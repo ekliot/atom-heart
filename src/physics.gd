@@ -10,6 +10,15 @@ const FRICTION_AIR = 0.3
 const GRAVITY = 25.0
 const UP = Vector2(0, -1)
 
+"""
+COLLISION LAYERS:
+  1. Player movement
+  2. Player damage
+  3. NPC movement
+  4. NPC damage
+  5. Blast blocking
+"""
+
 
 func apply_friction_flt(flt, friction, to=0.0):
   return lerp(flt, to, friction)

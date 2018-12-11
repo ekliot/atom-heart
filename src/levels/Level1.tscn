@@ -18,12 +18,13 @@ script = ExtResource( 1 )
 position = Vector2( 529, 360 )
 scale = Vector2( 8.25, 1 )
 input_pickable = false
-collision_layer = 1
-collision_mask = 1
+collision_layer = 21
+collision_mask = 0
 constant_linear_velocity = Vector2( 0, 0 )
 constant_angular_velocity = 0.0
 friction = 0.3
 bounce = 0.0
+_sections_unfolded = [ "Collision" ]
 
 [node name="Sprite" type="Sprite" parent="Block" index="0"]
 
@@ -40,7 +41,36 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Player" parent="." index="1" instance=ExtResource( 3 )]
+[node name="Block2" type="StaticBody2D" parent="." index="1"]
+
+position = Vector2( 1076.16, 360 )
+rotation = -0.261799
+scale = Vector2( 8.25, 1 )
+input_pickable = false
+collision_layer = 21
+collision_mask = 0
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 0.3
+bounce = 0.0
+_sections_unfolded = [ "Collision", "Transform" ]
+
+[node name="Sprite" type="Sprite" parent="Block2" index="0"]
+
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Block2" index="1"]
+
+shape = SubResource( 1 )
+_sections_unfolded = [ "Transform" ]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Player" parent="." index="2" instance=ExtResource( 3 )]
 
 position = Vector2( 520, 208 )
 

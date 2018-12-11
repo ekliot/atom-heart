@@ -9,7 +9,7 @@
 [ext_resource path="res://src/chars/player/arms/states/firing.gd" type="Script" id=7]
 [ext_resource path="res://src/chars/player/arms/states/striking.gd" type="Script" id=8]
 
-[node name="Arm" type="Node" index="0"]
+[node name="Arm" type="Node"]
 
 script = ExtResource( 1 )
 ARM_SIDE = null

@@ -16,18 +16,17 @@ var cone = null
 var elapsed = 0.0 # seconds
 var duration = 1.0 # seconds
 
-func _enter_tree():
-  pass
+func _ready():
+  $Cone.enable()
 
 func build_cone(arm, force, launch_dir):
   self.arm = arm
-  self.power = force
+  self.power = force / 3
   self.dir = launch_dir
   # DEV NOTE I _think_ this position should be local to the parent,
   # rather than a global position, but if Blast is always a child of
   # Level I think both shoud be equal?
   self.origin = arm.get_global_firing_pos() # - get_parent().global_position
-  print(self.origin)
 
   $Cone.setup(origin, dir, power, arm.BLAST_ARC)
 
