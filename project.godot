@@ -16,8 +16,9 @@ config/icon="res://src/icon.png"
 
 [autoload]
 
-PHYSICS="*res://src/physics.gd"
 LOGGER="*res://src/util/logger.gd"
+MATHS="*res://src/maths.gd"
+PHYSICS="*res://src/physics.gd"
 GM="*res://src/gamemaster.gd"
 
 [input]

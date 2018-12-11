@@ -60,7 +60,7 @@ func _physics_process(dt):
   complete = true
   disconnect('body_shape_entered', self, '_save_collision_data')
 
-  # return
+  return
 
   # LOGGER.debug(self, get_overlapping_bodies())
   # LOGGER.debug(self, collisions)
@@ -83,7 +83,7 @@ func _physics_process(dt):
     if contacts:
       for _pt in contacts:
         if _pt:
-          # _draw_contact(_pt)
+          _draw_contact(_pt)
           var dest = _pt - origin
           if dest != Vector2():
             var r = BlastRay.new(origin, dest, collision_mask)
@@ -111,7 +111,7 @@ func enable():
 func disable():
   $Shape.disabled = true
 
-func setup(_orig, _dir, _dist, _arc, _res=50):
+func setup(_orig, _dir, _dist, _arc, _res=10):
   set_origin(_orig) # cone origin, a Vector2
   set_direction(_dir) # cone direction, a Vector2
   set_distance(_dist) # how long the cone is, a float
@@ -137,11 +137,7 @@ func _build_shape():
 
 func _build_points():
   cone_path = PoolVector2Array()
-  cone_path.push_back(origin)
-
-  # calculate the starting angle in degrees:
-  #   angle of cone direction + half the desired arc
-  var ang_start = rad2deg(self.dir.angle()) + arc / 2.0
+  cone_path.push_back(self.origin)
 
   """
   for r in range(resolution + 1):
@@ -159,25 +155,18 @@ func _build_points():
     ray.queue_free()
   """
 
-  # add a point for each of the R "slices"
-  #   R := resolution
-  for r in range(resolution + 1):
-    # what is the angle (in radians) of this slice?
-    #   Rth slice angle-length := r * arc / resolution
-    #   starting angle + <Rth slice angle-length> - desired arc
-    var angle = deg2rad(ang_start + r * arc / resolution - arc)
-    print(rad2deg(angle))
-    # what is the vector location of this slice?
-    var ray_dest = dist * Vector2(cos(angle), sin(angle))
-    var ray = BlastRay.new(origin, ray_dest, collision_mask)
+  var arc_pts = MATHS.points_of_arc(self.dir, self.arc, self.dist, resolution)
+
+  for point in arc_pts:
+    var ray = BlastRay.new(self.origin, point, collision_mask)
     add_child(ray)
     var isect = ray.get_collision_point()
-    LOGGER.debug(self, "%s ~> %s/%s" % [origin, ray_dest, isect])
+    LOGGER.debug(self, "%s ~> %s/%s" % [self.origin, self.origin + point, isect])
     if isect != Vector2():
       cone_path.push_back(isect)
       _draw_contact(isect)
     else:
-      cone_path.push_back(origin + ray_dest)
+      cone_path.push_back(self.origin + point)
     ray.queue_free()
 
 """
