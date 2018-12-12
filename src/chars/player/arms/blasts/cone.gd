@@ -14,16 +14,16 @@ var origin = Vector2() setget set_origin
 var dir = Vector2()
 var dist = 0.0
 var arc = 0.0
+var width = 0.0
 
 var resolution = 0
 
 # TODO this ought to be textures/shaders
 var colors = PoolColorArray([Color(1.0, 0.0, 0.0)])
 
-# var cone_area = CollisionPolygon2D.new()
 var cone_path = PoolVector2Array()
 
-var complete = false
+var parsed = false
 var collisions = []
 
 """
@@ -50,17 +50,17 @@ func _save_collision_data(body_id, body, body_shape, area_shape):
   var tform = body.transform
 
   var coll_data = [_tform, shape, tform]
-  collisions.push_back(coll_data)
+  self.collisions.push_back(coll_data)
   LOGGER.debug(self, "Saved collision with %s" % body.name)
 
 func _physics_process(dt):
-  if complete:
+  if parsed:
     return
 
-  complete = true
+  parsed = true
   disconnect('body_shape_entered', self, '_save_collision_data')
 
-  return
+  # return
 
   # LOGGER.debug(self, get_overlapping_bodies())
   # LOGGER.debug(self, collisions)
@@ -79,7 +79,7 @@ func _physics_process(dt):
     # print(Physics2DServer.shape_get_data(_shape.get_rid()))
 
     var contacts = _shape.collide_and_get_contacts(_tform, shape, tform)
-    # printt(shape, contacts)
+    printt(shape, contacts)
     if contacts:
       for _pt in contacts:
         if _pt:
@@ -111,12 +111,13 @@ func enable():
 func disable():
   $Shape.disabled = true
 
-func setup(_orig, _dir, _dist, _arc, _res=10):
+func setup(_orig, _dir, _dist, _arc, _width, _res=10):
   set_origin(_orig) # cone origin, a Vector2
   set_direction(_dir) # cone direction, a Vector2
   set_distance(_dist) # how long the cone is, a float
   set_arc(_arc) # provided in degrees, a float
-  self.resolution = _res
+  set_width(_width) # how wide the cone is, a float
+  set_resolution(_res)
 
   _build_shape()
 
@@ -139,34 +140,34 @@ func _build_points():
   cone_path = PoolVector2Array()
   cone_path.push_back(self.origin)
 
-  """
-  for r in range(resolution + 1):
-    var angle = deg2rad(ang_start + r * arc / resolution - arc)
-    var ray_dest = dist * Vector2(cos((angle - PI) / 2.0), sin(-angle) / 4.0)
-    var ray = BlastRay.new(origin, ray_dest, collision_mask)
-    add_child(ray)
-    var isect = ray.get_collision_point()
-    LOGGER.debug(self, "%s ~> %s/%s" % [origin, ray_dest, isect])
-    if isect != Vector2():
-      cone_path.push_back(isect)
-      _draw_contact(isect)
-    else:
-      cone_path.push_back(origin + ray_dest)
-    ray.queue_free()
-  """
+  var angle = self.dir.angle()
+  var arc_pts = PoolVector2Array()
+  var half_arc = deg2rad(self.arc / 2.0)
+  arc_pts.append_array(
+    MATHS.blast_points_parametric_left(angle - half_arc, self.width, self.dist, self.resolution)
+  )
+  arc_pts.append_array(
+    MATHS.points_of_arc(angle, self.arc, self.dist, self.resolution)
+  )
+  arc_pts.append_array(
+    MATHS.blast_points_parametric_right(angle + half_arc, self.width, self.dist, self.resolution)
+  )
 
-  var arc_pts = MATHS.points_of_arc(self.dir, self.arc, self.dist, resolution)
+  var pt
+  var casted = PoolVector2Array()
 
   for point in arc_pts:
     var ray = BlastRay.new(self.origin, point, collision_mask)
     add_child(ray)
     var isect = ray.get_collision_point()
-    LOGGER.debug(self, "%s ~> %s/%s" % [self.origin, self.origin + point, isect])
+    # LOGGER.debug(self, "%s ~> %s/%s" % [self.origin, self.origin + point, isect])
     if isect != Vector2():
-      cone_path.push_back(isect)
+      pt = isect
       _draw_contact(isect)
     else:
-      cone_path.push_back(self.origin + point)
+      pt = self.origin + point
+    if not pt in cone_path:
+      cone_path.push_back(pt)
     ray.queue_free()
 
 """
@@ -198,6 +199,16 @@ func set_arc(_arc):
     arc = _arc
     _update()
 
+func set_width(_width):
+  if width != _width:
+    width = _width
+    _update()
+
+func set_resolution(_res):
+  if self.resolution != _res:
+    self.resolution = _res
+    _update()
+
 
 class BlastRay:
   extends RayCast2D
@@ -209,5 +220,5 @@ class BlastRay:
     collision_mask = mask
 
   func _ready():
-    LOGGER.debug(self, "%s => %s" % [global_position, cast_to])
+    # LOGGER.debug(self, "%s => %s" % [global_position, cast_to])
     force_raycast_update()

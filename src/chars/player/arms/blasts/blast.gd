@@ -28,7 +28,7 @@ func build_cone(arm, force, launch_dir):
   # Level I think both shoud be equal?
   self.origin = arm.get_global_firing_pos() # - get_parent().global_position
 
-  $Cone.setup(origin, dir, power, arm.BLAST_ARC)
+  $Cone.setup(origin, dir, power, arm.BLAST_ARC, arm.BLAST_WIDTH)
 
   # TODO connect collision logic from cone to self
 

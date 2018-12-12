@@ -40,7 +40,8 @@ export (Vector2) var FIRING_POS = Vector2()
 """
 export (float) var MIN_FORCE = 200.0
 export (float) var MAX_FORCE = 800.0
-export (float) var BLAST_ARC = 75.0 # degrees
+export (float, 0.0, 60.0) var BLAST_ARC = 30.0 # degrees
+export (float, 0.0, 1.0) var BLAST_WIDTH = 0.5
 
 # the input action associated with this arm
 onready var ACTION = 'attack_%s' % ARM_SIDE

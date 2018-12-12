@@ -4,9 +4,9 @@ filename: maths.gd
 
 extends Node
 
-func points_of_arc(center_dir, arclen, dist=1.0, resolution=10):
+func points_of_arc(angle, arclen, dist, resolution=10):
   """
-  calculates the clockwise points of an arc
+  calculates the counter-clockwise points of an arc
   of length $arclen,
   centered in the direction $center_dir,
   with radius $dist,
@@ -16,7 +16,7 @@ func points_of_arc(center_dir, arclen, dist=1.0, resolution=10):
 
   # calculate the starting angle in degrees:
   #   angle of cone direction + half the desired arc
-  var ang_start = rad2deg(center_dir.angle()) + arclen / 2.0
+  var ang_start = rad2deg(angle) + arclen / 2.0
 
   # add a point for each of the R "slices"
   #   R := resolution
@@ -24,9 +24,46 @@ func points_of_arc(center_dir, arclen, dist=1.0, resolution=10):
     # what is the angle (in radians) of this slice?
     #   Rth slice angle-length := r * arclen / resolution
     #   starting angle + <Rth slice angle-length> - desired arclen
-    var angle = deg2rad(ang_start + r * arclen / resolution - arclen)
+    var ang = deg2rad(ang_start + r * arclen / resolution - arclen)
     # what is the vector location of this slice?
-    var point = dist * Vector2(cos(angle), sin(angle))
-    points.push_back(point)
+    var pt = dist * Vector2(cos(ang), sin(ang))
+    points.push_back(pt.round())
+
+  return points
+
+func blast_points_parametric_left(dir, w, l, resolution=10):
+  """
+  $w := width
+  $l := length
+  $dir := direction of blast
+  $resolution := how many points
+  """
+  return blast_points_parametric(dir, w, l, resolution, PI, PI*2)
+
+func blast_points_parametric_right(dir, w, l, resolution=10):
+  """
+  $w := width
+  $l := length
+  $dir := direction of blast
+  $resolution := how many points
+  """
+  return blast_points_parametric(dir, w, l, resolution, 0, PI)
+
+func blast_points_parametric(rot, w, l, resolution, start, end):
+  var points = PoolVector2Array()
+
+  var step = (end - start) / resolution
+
+  for r in range(resolution + 1):
+    var ang = start + r * step
+    # DEV NOTE the former can be used for optimization, but it will be backwards
+    var _x = l - l * sin(ang / 2.0)
+    var _y = w * sin(ang) * 50 # MAGICNUM
+
+    var x = _x * cos(rot) - _y * sin(rot)
+    var y = _x * sin(rot) + _y * cos(rot)
+    var pt = Vector2(x, y)
+    if pt.abs() != Vector2():
+      points.push_back(pt.round())
 
   return points
