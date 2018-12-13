@@ -83,7 +83,7 @@ func _physics_process(dt):
     if contacts:
       for _pt in contacts:
         if _pt:
-          _draw_contact(_pt)
+          # _draw_contact(_pt)
           var dest = _pt - origin
           if dest != Vector2():
             var r = BlastRay.new(origin, dest, collision_mask)

@@ -16,8 +16,8 @@ ARM_SIDE = null
 SPRITE_FRAMES = null
 ANCHOR_POS = Vector2( 0, 0 )
 FIRING_POS = Vector2( 0, 0 )
-MIN_FORCE = 200.0
-MAX_FORCE = 800.0
+MIN_FORCE = 350.0
+MAX_FORCE = 1000.0
 BLAST_ARC = 30.0
 BLAST_WIDTH = 0.5
 
@@ -33,7 +33,7 @@ script = ExtResource( 5 )
 
 script = ExtResource( 6 )
 MAX_CHARGE = 2.0
-CHARGE_RATE = 1.0
+CHARGE_RATE = 2.0
 STRIKE_THRESH = 0.0666667
 
 [node name="Firing" parent="StateMachine" index="2" instance=ExtResource( 4 )]
@@ -43,5 +43,3 @@ script = ExtResource( 7 )
 [node name="Striking" parent="StateMachine" index="3" instance=ExtResource( 4 )]
 
 script = ExtResource( 8 )
-
-

@@ -37,12 +37,10 @@ texture = ExtResource( 6 )
 [node name="ArmLeft" parent="." index="4" instance=ExtResource( 7 )]
 
 ARM_SIDE = "left"
-BLAST_WIDTH = 0.5
 
 [node name="ArmRight" parent="." index="5" instance=ExtResource( 7 )]
 
 ARM_SIDE = "right"
-BLAST_WIDTH = 0.5
 
 [node name="Idle" parent="StateMachine" index="0" instance=ExtResource( 8 )]
 
@@ -59,5 +57,3 @@ script = ExtResource( 11 )
 [node name="Jumping" parent="StateMachine" index="3" instance=ExtResource( 8 )]
 
 script = ExtResource( 12 )
-
-
