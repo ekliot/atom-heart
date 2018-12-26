@@ -11,10 +11,12 @@ const VEL_POINT = preload("res://src/ui/debug/VelocityPointer.tscn")
 const ARM_INSPECT = preload("res://src/ui/debug/ArmInspector.tscn")
 
 func _ready():
+  var status
+  
   if DEBUG:
-    var status = "ENABLED"
+    status = "ENABLED"
     LOGGER.logging_lvl = LOGGER.DEBUG
   else:
-    var status = "DISABLED"
+    status = "DISABLED"
 
   LOGGER.info(self, "DEBUGGING %s" % status)
