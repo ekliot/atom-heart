@@ -6,10 +6,10 @@ extends './arm_state.gd'
 
 const Blast = preload("res://src/chars/player/arms/blasts/Blast.tscn")
 
-var force = 0.0
+var charge = 0.0
 
 func _on_enter(state_data={}, last_state=null):
-  force = state_data['force']
+  charge = state_data['charge']
 
   arm.get_sprite().animate('fire')
 
@@ -22,7 +22,7 @@ func _blast_off():
   GM.LEVEL.add_child(blast)
 
   # multiply force by the proportional size of the cone
-  force *= blast.build_cone(arm, force, arm.point_dir)
+  var force = blast.build_cone(arm, charge, arm.point_dir)
 
   # negative because, if the arm is pointing down, we want to launch up
   var launch_dir = -arm.point_dir

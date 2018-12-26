@@ -38,10 +38,13 @@ export (Vector2) var FIRING_POS = Vector2()
 """
 --- Mechanical constants
 """
-export (float) var MIN_FORCE = 200.0
-export (float) var MAX_FORCE = 800.0
-export (float, 0.0, 60.0) var BLAST_ARC = 30.0 # degrees
-export (float, 0.0, 1.0) var BLAST_WIDTH = 0.5
+export (float) var MIN_FORCE = 1.0
+export (float) var MAX_FORCE = 5.0
+export (float, 0.0, 60.0) var CONE_ARC = 30.0 # degrees
+export (float, 0.0, 1.0) var CONE_WIDTH = 0.5
+# modifies how long the blast cone is
+# this gets multiplied by the calculated force
+export (float) var CONE_LENGTH = 1.0
 
 # the input action associated with this arm
 onready var ACTION = 'attack_%s' % ARM_SIDE
@@ -60,7 +63,6 @@ func _ready():
   else:
     LOGGER.warning(self, "sprite frames not provided")
 
-
   FSM.connect('state_change', self, '_on_state_change')
   FSM.start('idle')
 
@@ -74,8 +76,7 @@ func _on_state_change(state_from, state_to):
 
 func proportional_force(proportion):
   # TODO make non-linear?
-  var delta_force = MAX_FORCE - MIN_FORCE
-  var force = delta_force * proportion
+  var force = (MAX_FORCE - MIN_FORCE) * proportion
   return MIN_FORCE + force
 
 func point_at_mouse():

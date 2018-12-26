@@ -7,11 +7,11 @@ extends './arm_state.gd'
 signal charge_change(old_charge, new_charge, delta)
 
 # this represents how many seconds a charge can be held before it must be released
-export (float) var MAX_CHARGE = 2.0
+export (float, 0.0, 10.0) var MAX_CHARGE = 2.0
 # how quickly in relation to dt charge increases
-export (float) var CHARGE_RATE = 1.0
+export (float, 0.01, 10.0) var CHARGE_RATE = 1.0
 # what the max threshold is before a strike is executed instead of a fire
-export (float) var STRIKE_THRESH = 4.0/60.0  # two physics frames
+const STRIKE_THRESH = 5.0/60.0  # five physics frames
 
 var current_charge = 0.0
 
@@ -46,14 +46,13 @@ func _on_physics_process(delta):
 """
 
 func fire():
-  FSM.set_state_data('firing', {'force': force_from_charge()})
+  FSM.set_state_data('firing', {'charge': charge_power()})
   return 'firing'
 
 func strike():
-  # FSM.set_state_data('striking', {'force': force_from_charge()})
   return 'striking'
 
-func force_from_charge(charge=current_charge):
+func charge_power(charge=current_charge):
   var proportion = clamp(charge / MAX_CHARGE, 0.0, 1.0)
   return arm.proportional_force(proportion)
 

@@ -9,17 +9,18 @@
 [ext_resource path="res://src/chars/player/arms/states/firing.gd" type="Script" id=7]
 [ext_resource path="res://src/chars/player/arms/states/striking.gd" type="Script" id=8]
 
-[node name="Arm" type="Node"]
+[node name="Arm" type="Node" index="0"]
 
 script = ExtResource( 1 )
 ARM_SIDE = null
 SPRITE_FRAMES = null
 ANCHOR_POS = Vector2( 0, 0 )
 FIRING_POS = Vector2( 0, 0 )
-MIN_FORCE = 350.0
-MAX_FORCE = 1000.0
-BLAST_ARC = 30.0
-BLAST_WIDTH = 0.5
+MIN_FORCE = 1.0
+MAX_FORCE = 5.0
+CONE_ARC = 30.0
+CONE_WIDTH = 0.5
+CONE_LENGTH = 1.0
 
 [node name="Sprite" parent="." index="0" instance=ExtResource( 2 )]
 
@@ -43,3 +44,5 @@ script = ExtResource( 7 )
 [node name="Striking" parent="StateMachine" index="3" instance=ExtResource( 4 )]
 
 script = ExtResource( 8 )
+
+
