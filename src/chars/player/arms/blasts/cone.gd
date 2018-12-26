@@ -6,11 +6,13 @@ extends Area2D
 
 const Circle = preload("res://src/assets/Circle.tscn")
 
-signal updated
+var blast_col_mask = pow(2, PHYSICS.COL_BLAST)
 
-var current = false
+signal cone_built
 
-var origin = Vector2() setget set_origin
+var built = false
+
+var origin = Vector2()
 var dir = Vector2()
 var dist = 0.0
 var arc = 0.0
@@ -21,10 +23,21 @@ var resolution = 0
 # TODO this ought to be textures/shaders
 var colors = PoolColorArray([Color(1.0, 0.0, 0.0)])
 
+# the shape of the blast cone
 var cone_path = PoolVector2Array()
 
+# flag for when collision checking is finished
 var parsed = false
+# the transform at time of collision detection
+var coll_tform = null
+# a collection of tuples, each with:
+#   - collided shape
+#   - that shape's transform
 var collisions = []
+
+# the average length of the cone's rays
+# used to determine proportional propulsive power of the blast
+var avg_len = 0.0
 
 """
 === NODE OVERRIDES
@@ -34,71 +47,85 @@ func _init():
   connect('body_shape_entered', self, '_save_collision_data')
 
 func _ready():
-  LOGGER.debug(self, "READY")
+  LOGGER.debug(self, "READY") # print-debugging order of operations
 
 func _draw():
-  if not current:
+  if not built:
     _build_shape()
   draw_polygon(cone_path, colors)
 
-func _save_collision_data(body_id, body, body_shape, area_shape):
-  var _owner = self.shape_find_owner(area_shape)
-  var _tform = self.transform
-
-  var owner = body.shape_find_owner(body_shape)
-  var shape = body.shape_owner_get_shape(owner, body_shape)
-  var tform = body.transform
-
-  var coll_data = [_tform, shape, tform]
-  self.collisions.push_back(coll_data)
-  LOGGER.debug(self, "Saved collision with %s" % body.name)
-
 func _physics_process(dt):
+  """
+  only for the first physics frame, execute logic on each collided object
+  ideally, instead of arbitrary ray-casting in _build_shape(), we find collided objs
+    here and use an optimal number of rays (e.g. one for each corner of collided objs)
+  for now, we'll just execute damage logic and etc.
+  """
   if parsed:
     return
 
   parsed = true
   disconnect('body_shape_entered', self, '_save_collision_data')
 
-  # return
-
+  """
   # LOGGER.debug(self, get_overlapping_bodies())
   # LOGGER.debug(self, collisions)
 
   var _shape = $Shape.shape
-  for data in collisions:
-    var _tform = data[0]
-    var shape = data[1]
-    var tform = data[2]
+  for data in self.collisions:
+    var shape = data[0]
+    var tform = data[1]
 
-    # print(Physics2DServer.shape_get_type(shape.get_rid()))
-    # print(Physics2DServer.shape_get_data(shape.get_rid()))
+    # XXX just some debugging on how physics shapes work
+    # LOGGER.debug(self, Physics2DServer.shape_get_type(shape.get_rid()))
+    # LOGGER.debug(self, Physics2DServer.shape_get_data(shape.get_rid()))
     # var ext = Physics2DServer.shape_get_data(shape.get_rid())
-    # print(tform.xform(ext))
-    # print(Physics2DServer.shape_get_type(_shape.get_rid()))
-    # print(Physics2DServer.shape_get_data(_shape.get_rid()))
+    # LOGGER.debug(self, tform.xform(ext))
+    # LOGGER.debug(self, Physics2DServer.shape_get_type(_shape.get_rid()))
+    # LOGGER.debug(self, Physics2DServer.shape_get_data(_shape.get_rid()))
 
-    var contacts = _shape.collide_and_get_contacts(_tform, shape, tform)
-    printt(shape, contacts)
+    # DEV this does not work as expected, returns only a single point for RectangleShape2D (other shapes too?)
+    var contacts = _shape.collide_and_get_contacts(self.coll_tform, shape, tform)
+    # LOGGER.debug(self, "%s // %s" % [shape, contacts])
     if contacts:
       for _pt in contacts:
         if _pt:
           # _draw_contact(_pt)
           var dest = _pt - origin
           if dest != Vector2():
-            var r = BlastRay.new(origin, dest, collision_mask)
+            var r = BlastRay.new(origin, dest, blast_col_mask)
             add_child(r)
             var pt = r.get_collision_point()
             LOGGER.debug(self, "%s -> %s" % [_pt, pt])
             _draw_contact(pt)
           else:
             printt(origin, _pt)
+  """
+
+  # TODO deal damage to anything in the PHYSICS.COL_NPC_DMG coll-layer
+
+"""
+=== PRIVATES
+"""
+
+func _save_collision_data(body_id, body, body_shape, area_shape):
+  var owner = body.shape_find_owner(body_shape)
+  var shape = body.shape_owner_get_shape(owner, body_shape)
+  var tform = body.transform
+
+  var coll_data = [shape, tform]
+  self.collisions.push_back(coll_data)
+  LOGGER.debug(self, "Saved collision with %s" % body.name)
 
 func _draw_contact(pt):
-  var c = Circle.instance()
-  c.global_position = pt
-  c.scale = Vector2(4, 4)
-  add_child(c)
+  """
+  XXX this is just for debugging collision points
+  """
+  if DBG.DEBUG:
+    var c = Circle.instance()
+    c.global_position = pt
+    c.scale = Vector2(4, 4) # HACK
+    add_child(c)
 
 """
 === PUBLIC CORE
@@ -110,14 +137,15 @@ func enable():
 
 func disable():
   $Shape.disabled = true
+  LOGGER.debug(self, "DISABLE")
 
 func setup(_orig, _dir, _dist, _arc, _width, _res=10):
-  set_origin(_orig) # cone origin, a Vector2
-  set_direction(_dir) # cone direction, a Vector2
-  set_distance(_dist) # how long the cone is, a float
-  set_arc(_arc) # provided in degrees, a float
-  set_width(_width) # how wide the cone is, a float
-  set_resolution(_res)
+  origin = _orig # cone origin, a Vector2
+  dir = _dir     # cone direction, a Vector2
+  dist = _dist   # how long the cone is, a float
+  arc = _arc     # provided in degrees, a float
+  width = _width # how wide the cone is, a float
+  resolution = _res
 
   _build_shape()
 
@@ -128,87 +156,75 @@ func setup(_orig, _dir, _dist, _arc, _width, _res=10):
 func _build_shape():
   _build_points()
 
-  # cone_area.set_polygon(cone_path)
-
   var shape = ConvexPolygonShape2D.new()
   shape.set_point_cloud(cone_path)
   $Shape.shape = shape
+  self.coll_tform = self.transform
 
-  current = true
+  built = true
+  emit_signal('cone_built')
 
 func _build_points():
   cone_path = PoolVector2Array()
   cone_path.push_back(self.origin)
 
+  # the angle of the blast
   var angle = self.dir.angle()
+  # where to hold the points for the initial cone shape
   var arc_pts = PoolVector2Array()
+  # half of this blast's arc
   var half_arc = deg2rad(self.arc / 2.0)
+  # first, build the left portion of the cone
   arc_pts.append_array(
     MATHS.blast_points_parametric_left(angle - half_arc, self.width, self.dist, self.resolution)
   )
+  # next, build the central portion of the cone
   arc_pts.append_array(
     MATHS.points_of_arc(angle, self.arc, self.dist, self.resolution)
   )
+  # last, build the right portion of the cone
   arc_pts.append_array(
     MATHS.blast_points_parametric_right(angle + half_arc, self.width, self.dist, self.resolution)
   )
 
   var pt
-  var casted = PoolVector2Array()
+  var orig_len
+  var isect_len
+  avg_len = 0.0
 
+  # for each desired point, cast a ray and use the collided point instead
+  # NOTE
+  #   point is always in relative coords
+  #   pt is always in global coords
   for point in arc_pts:
-    var ray = BlastRay.new(self.origin, point, collision_mask)
+    var ray = BlastRay.new(self.origin, point, blast_col_mask)
     add_child(ray)
     var isect = ray.get_collision_point()
     # LOGGER.debug(self, "%s ~> %s/%s" % [self.origin, self.origin + point, isect])
-    if isect != Vector2():
+
+    orig_len = point.length()
+
+    # isect is (0, 0) if the ray did not collide with anything
+    if isect == Vector2():
+      pt = self.origin + point
+    else:
       pt = isect
       _draw_contact(isect)
-    else:
-      pt = self.origin + point
+
+    isect_len = (pt - self.origin).length()
+
+    # unlike humour, we want to avoid repetition (such as intersections between the three arc sections)
     if not pt in cone_path:
       cone_path.push_back(pt)
+      if isect_len != orig_len:
+        avg_len += isect_len / orig_len
+      else:
+        avg_len += 1.0
+
     ray.queue_free()
 
-"""
-=== HELPERS
-"""
-
-func _update():
-  if current:
-    current = false
-    emit_signal('updated')
-
-func set_origin(_orig):
-  if origin != _orig:
-    origin = _orig
-    _update()
-
-func set_direction(_dir):
-  if dir != _dir:
-    dir = _dir
-    _update()
-
-func set_distance(_dist):
-  if dist != _dist:
-    dist = _dist
-    _update()
-
-func set_arc(_arc):
-  if arc != _arc:
-    arc = _arc
-    _update()
-
-func set_width(_width):
-  if width != _width:
-    width = _width
-    _update()
-
-func set_resolution(_res):
-  if self.resolution != _res:
-    self.resolution = _res
-    _update()
-
+  avg_len /= cone_path.size()
+  LOGGER.debug(self, "for %d/%d points, average length proportion was %s" % [cone_path.size(), arc_pts.size(), avg_len])
 
 class BlastRay:
   extends RayCast2D

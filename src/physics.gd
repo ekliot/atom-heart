@@ -10,15 +10,20 @@ const FRICTION_AIR = 0.3
 const GRAVITY = 25.0
 const UP = Vector2(0, -1)
 
+enum COLL {COL_PL_MOV, COL_PL_DMG, COL_NPC_MOV, COL_NPC_DMG, COL_BLAST}
 """
-COLLISION LAYERS:
-  1. Player movement
-  2. Player damage
-  3. NPC movement
-  4. NPC damage
-  5. Blast blocking
-"""
+=== COLLISION LAYERS
 
+enum: 0 1 2 3 4
+bits: x x x x x xxxxxxxxxxxxxxxxxxxxxxxxxxx
+      ^ ^ ^ ^ ^ ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      | | | | |--- Blast blocking
+      | | | |--- NPC damage
+      | | |--- NPC movement
+      | |--- Player damage
+      |--- Player movement
+
+"""
 
 func apply_friction_flt(flt, friction, to=0.0):
   return lerp(flt, to, friction)

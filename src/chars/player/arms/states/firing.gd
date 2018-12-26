@@ -20,7 +20,9 @@ func _on_enter(state_data={}, last_state=null):
 func _blast_off():
   var blast = Blast.instance()
   GM.LEVEL.add_child(blast)
-  blast.build_cone(arm, force, arm.point_dir)
+
+  # multiply force by the proportional size of the cone
+  force *= blast.build_cone(arm, force, arm.point_dir)
 
   # negative because, if the arm is pointing down, we want to launch up
   var launch_dir = -arm.point_dir
