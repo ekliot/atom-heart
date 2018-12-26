@@ -39,41 +39,15 @@ DUMB IDEA AHEAD:
 
   THIS ONLY SOLVES THE VISUAL ELEMENT. HOW DO WE KNOW WHAT IS COVERED BY THE LIGHT?
 
-###########
 
-NAIVE, HALF-BAKED INITIAL IMPLEMENTATION BELOW SAVED FOR POSTERITY
+CollisionPolygon2D.BuildMode
+  BUILD_SOLIDS := Collisions will include the polygon and its contained area.
+  BUILD_SEGMENTS := Collisions will only include the polygon edges.
 
+  Depending on how the latter works, we could build a polygon using that to determine how the BlastCone shape is intersected, then build the "real" BlastCone from there
 
-class BlastCone
-  extends Area2D
+  THIS DOES NOT ACCOUNT FOR AN ENTIRELY CONTAINED OBJECT
 
-  var origin = Vector2()
-  var dir = 0.0
-  var dist = 0.0
-  var arc = 0.0
-
-  var area = null
-  var rays = []
-
-  func _init(_orig, _dir, _dist, _arc, _resolution=10):
-    self.origin = _orig
-    self.dir = _dir
-    self.dist = _dist
-    self.arc = _arc
-
-    self.rays = _build_rays(_resolution)
-
-  func _build_rays(resolution):
-    rays.clear()
-
-    var start_ang = rad2deg(dir.angle()) + arc / 2.0
-
-    for r in range(resolution + 1):
-      var angle = deg2rad(start_ang + r * arc / resolution - arc)
-      var ray_dest = origin + dist * Vector2(cos(angle), sin(angle))
-
-      var ray = RayCast2D.new()
-      ray.set_position(origin)
-      ray.set_cast_to(ray_dest)
-      rays.push_back(ray)
-"""
+PLANES
+  given our BlastCone is a list of 2D points representing the arc
+  suppose the cone is intersected 
