@@ -51,6 +51,9 @@ func _ready():
   FSM.connect('state_change', self, '_on_state_change')
   FSM.start('idle')
 
+  if DBG.DEBUG:
+    add_child(DBG.VEL_POINT.instance())
+
 func _on_state_change(state_from, state_to):
   LOGGER.debug(FSM, "changed state from %s to %s" % [state_from, state_to])
 
@@ -121,7 +124,7 @@ func get_friction():
   """
   gets the friction applied to the KB at this moment in time
   """
-  var friction = 0
+  var friction = 0.0
 
   if is_on_floor():
     for slide_idx in get_slide_count():

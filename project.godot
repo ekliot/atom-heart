@@ -17,6 +17,7 @@ config/icon="res://src/icon.png"
 [autoload]
 
 LOGGER="*res://src/util/logger.gd"
+DBG="*res://src/debugging.gd"
 MATHS="*res://src/maths.gd"
 PHYSICS="*res://src/physics.gd"
 GM="*res://src/gamemaster.gd"
