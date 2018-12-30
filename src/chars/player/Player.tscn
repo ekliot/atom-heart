@@ -21,6 +21,8 @@ _sections_unfolded = [ "Collision", "collision" ]
 
 [node name="HUD" parent="." index="0" instance=ExtResource( 3 )]
 
+editor/display_folded = true
+
 [node name="Collider" parent="." index="1"]
 
 polygon = PoolVector2Array( 32, -32, 32, 32, -32, 32, -32, -32 )
@@ -34,16 +36,10 @@ texture = ExtResource( 5 )
 [node name="ArmLeft" parent="." index="4" instance=ExtResource( 6 )]
 
 ARM_SIDE = "left"
-CONE_ARC = 30.0
-CONE_WIDTH = 0.5
-CONE_LENGTH = 1.0
 
 [node name="ArmRight" parent="." index="5" instance=ExtResource( 6 )]
 
 ARM_SIDE = "right"
-CONE_ARC = 30.0
-CONE_WIDTH = 0.5
-CONE_LENGTH = 1.0
 
 [node name="StateMachine" parent="." index="6"]
 
@@ -66,3 +62,4 @@ script = ExtResource( 10 )
 script = ExtResource( 11 )
 
 
+[editable path="HUD"]

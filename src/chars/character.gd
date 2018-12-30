@@ -9,8 +9,8 @@ extends KinematicBody2D
 signal update_look_dir(old_dir, new_dir)
 signal update_position(old_pos, new_pos)
 
-signal recover_health(amt, new_hp, max_hp)
-signal take_damage(from, amt, type)
+signal restore_health(amt, new_hp)
+signal take_damage(amt, from, type)
 
 onready var FSM = $StateMachine
 
@@ -28,11 +28,6 @@ var MIN_VEL = Vector2(20.0, -1.0)
 var ACCEL   = Vector2(80.0, PHYSICS.GRAVITY) setget ,get_acceleration
 var AIR_ACCEL_MOD = 0.4 setget ,get_air_accel_mod
 
-"""
---- Gameplay constants
-"""
-
-export (int) var MAX_HEALTH = 10
 
 """
 --- Instance properties
@@ -40,7 +35,6 @@ export (int) var MAX_HEALTH = 10
 
 var velocity = Vector2() setget ,get_velocity
 var look_dir = Vector2() setget ,get_look_dir
-var current_health = MAX_HEALTH
 
 
 """
@@ -85,10 +79,15 @@ func animate(anim_name):
   # TODO
   return
 
-func take_damage(from, amt, type=null):
-  current_health -= amt
+func take_damage(amt, from, type=null):
   # TODO check vs damage type and source
-  emit_signal( 'take_damage', from, amt, type )
+  emit_signal('take_damage', from, amt, type)
+  update_health(amt)
+
+func update_health(amt):
+  # NOTE player and enemy health is different
+  # DEV logic to be implemented by each implementer
+  emit_signal('update_health', amt)
 
 
 """
