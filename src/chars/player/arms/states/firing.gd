@@ -4,7 +4,7 @@ filename: firing.gd
 
 extends './arm_state.gd'
 
-const Blast = preload("res://src/chars/player/arms/blasts/Blast.tscn")
+const Blast = preload("res://src/effects/blasts/Blast.tscn")
 
 var charge = 0.0
 
