@@ -21,7 +21,18 @@ _sections_unfolded = [ "Collision", "collision" ]
 
 [node name="HUD" parent="." index="0" instance=ExtResource( 3 )]
 
-editor/display_folded = true
+[node name="Head" parent="HUD/GUI" index="0"]
+
+margin_bottom = 32.0
+
+[node name="HealthBar" parent="HUD/GUI/Head" index="0"]
+
+margin_right = 0.0
+margin_bottom = 32.0
+
+[node name="Torso" parent="HUD/GUI" index="1"]
+
+margin_top = 36.0
 
 [node name="Collider" parent="." index="1"]
 

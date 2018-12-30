@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://src/levels/level.gd" type="Script" id=1]
 [ext_resource path="res://src/icon.png" type="Texture" id=2]
 [ext_resource path="res://src/chars/player/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/chars/npcs/enemies/Mook.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -73,5 +74,9 @@ __meta__ = {
 [node name="Player" parent="." index="2" instance=ExtResource( 3 )]
 
 position = Vector2( 520, 208 )
+
+[node name="Mook" parent="." index="3" instance=ExtResource( 4 )]
+
+position = Vector2( 714.479, 272.829 )
 
 
