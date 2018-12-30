@@ -30,7 +30,7 @@ func _ready():
   # connect('update_position', self, '_on_move')
   connect('update_position', $PlayerCamera, '_on_player_move')
 
-func _input( ev ):
+func _input(ev):
   if ev is InputEventMouseMotion:
     # NOTE get_global_mouse_position() gets the cursor's world-coords,
     # but is only available from CanvasItems

@@ -2,10 +2,7 @@
 filename: airborne.gd
 """
 
-extends '../player_state.gd'
-
-# func _init():
-#   ID = 'airborne'
+extends "enemy_state.gd"
 
 
 """
@@ -14,18 +11,16 @@ extends '../player_state.gd'
 
 func _on_enter(state_data, last_state):
   # play airborne animation
-  # player.animate(ID + move_dir_as_str())
+  # host.animate(ID + move_dir_as_str())
   return ._on_enter(state_data, last_state)
 
 func _on_physics_process(delta):
-  var h_dir = player.get_h_dir()
+  var h_dir = host.get_h_dir()
 
-  if player.is_on_floor():
+  if host.is_on_floor():
     if h_dir:
       return 'move'
     return FSM.START_STATE
-  elif player.is_on_wall():
-    return 'move' # TODO 'on_wall'
 
   move_step(h_dir)
 
@@ -38,7 +33,7 @@ func _on_physics_process(delta):
 
 func move_step(h_dir):
   var _vel = update_velocity()
-  var max_v = player.MAX_VEL
-  _vel = PHYSICS.cap_velocity(_vel, max_v) # , player.get_friction())
+  var max_v = host.MAX_VEL
+  _vel = PHYSICS.cap_velocity(_vel, max_v) # , host.get_friction())
 
-  player.apply_velocity(_vel)
+  host.apply_velocity(_vel)

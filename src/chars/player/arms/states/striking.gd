@@ -2,7 +2,7 @@
 filename: striking.gd
 """
 
-extends './arm_state.gd'
+extends "arm_state.gd"
 
 const STRIKE_FORCE = 200.0
 

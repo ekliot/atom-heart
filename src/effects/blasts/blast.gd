@@ -4,7 +4,7 @@ filename: blast.gd
 
 extends Node
 
-const BlastCone = preload("./cone.gd")
+const BlastCone = preload("cone.gd")
 
 const MAX_DUR = 1.0 # seconds
 const POWER_SCALE = 200.0

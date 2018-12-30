@@ -2,7 +2,7 @@
 filename: idle.gd
 """
 
-extends '../player_state.gd'
+extends "player_state.gd"
 
 
 """

@@ -2,7 +2,7 @@
 filename: idle.gd
 """
 
-extends './arm_state.gd'
+extends "arm_state.gd"
 
 # func _on_enter(state_data={}, last_state=null):
 #   return ._on_enter(state_data, last_state)

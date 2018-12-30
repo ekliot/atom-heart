@@ -2,7 +2,7 @@
 filename: firing.gd
 """
 
-extends './arm_state.gd'
+extends "arm_state.gd"
 
 const Blast = preload("res://src/effects/blasts/Blast.tscn")
 

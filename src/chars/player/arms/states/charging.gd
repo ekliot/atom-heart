@@ -2,7 +2,7 @@
 filename: charging.gd
 """
 
-extends './arm_state.gd'
+extends "arm_state.gd"
 
 signal charge_change(old_charge, new_charge, delta)
 

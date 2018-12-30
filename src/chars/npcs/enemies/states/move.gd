@@ -2,7 +2,7 @@
 filename: move.gd
 """
 
-extends '../player_state.gd'
+extends "enemy_state.gd"
 
 
 """

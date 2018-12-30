@@ -1,6 +1,6 @@
 extends SceneTree
 
-const Blast = preload("./blast.gd")
+const Blast = preload("blast.gd")
 
 var cone = null
 
