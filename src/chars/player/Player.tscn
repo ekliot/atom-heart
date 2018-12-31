@@ -7,10 +7,11 @@
 [ext_resource path="res://src/icon.png" type="Texture" id=5]
 [ext_resource path="res://src/chars/player/arms/Arm.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/util/states/State.tscn" type="PackedScene" id=7]
-[ext_resource path="res://src/chars/player/states/motion/idle.gd" type="Script" id=8]
-[ext_resource path="res://src/chars/player/states/motion/move.gd" type="Script" id=9]
-[ext_resource path="res://src/chars/player/states/motion/airborne.gd" type="Script" id=10]
-[ext_resource path="res://src/chars/player/states/motion/jumping.gd" type="Script" id=11]
+[ext_resource path="res://src/chars/player/states/idle.gd" type="Script" id=8]
+[ext_resource path="res://src/chars/player/states/move.gd" type="Script" id=9]
+[ext_resource path="res://src/chars/player/states/airborne.gd" type="Script" id=10]
+[ext_resource path="res://src/chars/player/states/jumping.gd" type="Script" id=11]
+
 
 [node name="Player" instance=ExtResource( 1 )]
 

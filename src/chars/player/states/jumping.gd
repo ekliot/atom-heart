@@ -2,7 +2,7 @@
 filename: jumping.gd
 """
 
-extends '../player_state.gd'
+extends "player_state.gd"
 
 # func _init():
 #   ID = 'jumping'
