@@ -21,7 +21,7 @@ func _on_process(delta):
 
 func _on_physics_process(delta):
   # return ._on_physics_process(delta)
-  return 'idle'
+  return FSM.START_STATE
 
 func _on_animation_finished(sprite):
-  return 'idle'
+  return FSM.START_STATE
