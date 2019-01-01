@@ -50,7 +50,12 @@ func _on_physics_process(delta):
 """
 
 func move_step():
-  var _vel = update_velocity()
-  _vel = PHYSICS.cap_velocity(_vel, player.MAX_VEL)
+  var _vel = host.velocity
+  var move_cap = Vector2(
+    int(abs(_vel.x) > host.MAX_VEL.x),
+    int(abs(_vel.y) > host.MAX_VEL.y)
+  )
+  _vel = update_velocity(_vel, host.ACCEL * move_cap)
+  _vel = PHYSICS.cap_velocity(_vel, host.MAX_VEL)
   # TODO friction?
-  player.apply_velocity(_vel)
+  host.apply_velocity(_vel)
