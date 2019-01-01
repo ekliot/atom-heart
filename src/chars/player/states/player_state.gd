@@ -7,7 +7,7 @@ extends "res://src/util/states/state.gd"
 var player = null
 
 func set_host(host):
-  if not player:
+  if not player and host:
     player = host
 
 

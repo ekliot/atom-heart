@@ -4,7 +4,19 @@ filename: player.gd
 
 extends "res://src/chars/character.gd"
 
+"""
+=== CONSTANTS
+"""
+
 const Heart = preload("heart.gd")
+
+"""
+=== PROPERTIES
+"""
+
+"""
+--- Instance properties
+"""
 
 var hearts = []
 onready var hp_bar = $HUD.get_health_bar()
