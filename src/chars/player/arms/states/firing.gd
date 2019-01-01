@@ -27,7 +27,7 @@ func _blast_off():
   # negative because, if the arm is pointing down, we want to launch up
   var launch_dir = -arm.point_dir
   LOGGER.debug(self, "launching in direction %s with force %s" % [launch_dir, force])
-  arm.get_parent().push_me(force, launch_dir)
+  arm.get_parent().push(force, launch_dir)
 
 func _on_leave():
   return ._on_leave()

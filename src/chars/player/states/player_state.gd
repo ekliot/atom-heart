@@ -15,18 +15,8 @@ func set_host(host):
 === CORE METHODS
 """
 
-func update_velocity(vel=player.get_velocity(), accel=player.ACCEL, h_dir=player.get_h_dir()):
-  """
-  given a velocity vector, acceleration vector, and horizontal movement direction,
-  return a velocity vector with acceleration and movement applied
-  """
-  accel.x *= h_dir
-  vel += accel
-  return vel
+func update_velocity(vel=player.velocity, accel=player.ACCEL, h_dir=player.get_h_dir()):
+  return PHYSICS.update_velocity(vel, accel * Vector2(h_dir, 1))
 
 func jump(vel, jump_force):
-  """
-  return a velocity vector with player jump velocity applied
-  """
-  vel.y -= jump_force
-  return vel
+  return PHYSICS.jump(vel, jump_force)

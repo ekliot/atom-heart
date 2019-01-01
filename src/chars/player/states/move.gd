@@ -36,7 +36,7 @@ func _on_physics_process(delta):
   if not h_dir:
     return FSM.START_STATE
 
-  move_step()
+  move_step(h_dir)
 
   # if we've stopped moving (such as hitting a wall), return to our last state (idle)
   if not player.velocity.x:
@@ -49,8 +49,13 @@ func _on_physics_process(delta):
 === CORE METHODS
 """
 
-func move_step():
-  var _vel = update_velocity()
+func move_step(h_dir):
+  var _vel = player.velocity
+  var v_cap = player.MAX_VEL * _vel.normalized().abs()
+  var move_cap = int(abs(_vel.x) <= v_cap.x)
+
+  _vel = update_velocity(_vel, player.ACCEL * Vector2(move_cap, 1), h_dir)
   _vel = PHYSICS.cap_velocity(_vel, player.MAX_VEL)
+
   # TODO friction?
   player.apply_velocity(_vel)
