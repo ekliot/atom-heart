@@ -15,7 +15,7 @@ func _on_enter(state_data, last_state):
   return ._on_enter(state_data, last_state)
 
 func _on_physics_process(delta):
-  var next = host.brain.idle()
+  var next = brain.idle()
   if next:
     return next
 
