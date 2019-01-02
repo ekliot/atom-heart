@@ -51,6 +51,6 @@ func _on_physics_process(delta):
 
 func move_step():
   var _vel = update_velocity()
-  _vel = PHYSICS.cap_velocity(_vel, player.MAX_VEL)
+  _vel = PHYS.cap_velocity(_vel, player.MAX_VEL)
   # TODO friction?
   player.apply_velocity(_vel)

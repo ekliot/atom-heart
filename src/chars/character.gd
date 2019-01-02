@@ -25,8 +25,8 @@ onready var FSM = $StateMachine
 
 var MAX_VEL = 400.0
 var MIN_VEL = 20.0
-var ACCEL   = Vector2(80.0, PHYSICS.GRAVITY) setget ,get_acceleration
-var AIR_ACCEL_MOD = 0.4
+var ACCEL = Vector2(80.0, PHYS.GRAVITY) setget ,get_acceleration # accel is modified if airborne
+var AIR_ACCEL_MOD = 0.25
 
 
 """
@@ -56,7 +56,15 @@ func _on_state_change(state_from, state_to):
 === CORE
 """
 
-func apply_velocity(vel=velocity, up=PHYSICS.UP):
+func move(vec):
+  var _pos = get_position()
+  var coll = move_and_collide(vec)
+  if _pos != get_position():
+    emit_signal('update_position', _pos, get_position())
+  if coll:
+    pass # TODO collision signal
+
+func apply_velocity(vel=velocity, up=PHYS.UP):
   """
   move the character by its current (default), or arbitrary, velocity
   """
@@ -65,15 +73,7 @@ func apply_velocity(vel=velocity, up=PHYSICS.UP):
   if _pos != get_position():
     emit_signal('update_position', _pos, get_position())
 
-func move(dist, dir):
-  var _pos = get_position()
-  var coll = move_and_collide(dist * dir)
-  if _pos != get_position():
-    emit_signal('update_position', _pos, get_position())
-  if coll:
-    pass # TODO collision signal
-
-func push(accel, dir, up=PHYSICS.UP):
+func push(accel, dir, up=PHYS.UP):
   """
   apply an impulse to the character's current velocity
   """
@@ -134,7 +134,7 @@ func get_friction():
     # get wall friction
     pass
   else:
-    friction = PHYSICS.FRICTION_AIR
+    friction = PHYS.FRICTION_AIR
 
   return max(min(friction, 1.0), 0.0)
 

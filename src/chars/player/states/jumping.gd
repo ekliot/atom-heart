@@ -46,6 +46,7 @@ func _on_physics_process(delta):
 func move_step(h_dir, delta):
   var _vel = player.velocity
 
+  # so long as we are holding the jump button within the jump time, and this is the first time we tried to jump
   if Input.is_action_pressed('move_jump') and jump_time < MAX_JUMP_TIME and not jumped:
     var force = JUMP_FORCE if jump_time > 0.0 else JUMP_IMPULSE
     _vel = jump(player.velocity, force)
@@ -56,7 +57,7 @@ func move_step(h_dir, delta):
   _vel = update_velocity(_vel)
 
   var max_v = player.MAX_VEL
-  _vel = PHYSICS.cap_velocity(_vel, max_v)
+  _vel = PHYS.cap_velocity(_vel, max_v, PHYS.CAP_MASK_X)
 
   player.apply_velocity(_vel)
 

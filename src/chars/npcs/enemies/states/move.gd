@@ -56,6 +56,6 @@ func move_step():
     int(abs(_vel.y) > host.MAX_VEL.y)
   )
   _vel = update_velocity(_vel, host.ACCEL * move_cap)
-  _vel = PHYSICS.cap_velocity(_vel, host.MAX_VEL)
+  _vel = PHYS.cap_velocity(_vel, host.MAX_VEL)
   # TODO friction?
   host.apply_velocity(_vel)

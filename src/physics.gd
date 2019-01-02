@@ -11,11 +11,11 @@ const GRAVITY = 25.0
 const UP = Vector2(0, -1)
 
 enum COLLISON_LAYERS {
-  COL_PL_MOV,
-  COL_PL_DMG,
-  COL_NPC_MOV,
-  COL_NPC_DMG,
-  COL_BLAST
+  COL_PL_MOV = 1,
+  COL_PL_DMG = 2,
+  COL_NPC_MOV = 4,
+  COL_NPC_DMG = 8,
+  COL_BLAST = 16
 }
 
 """
@@ -53,22 +53,19 @@ func jump(vel, jump_force=GRAVITY*4):
   vel.y -= jump_force
   return vel
 
-func cap_velocity(vel, cap): #, friction=null):
+const CAP_MASK_X = Vector2(1, 0)
+const CAP_MASK_Y = Vector2(0, 1)
 
-  # if friction:
-  #   if abs(vel.x) > abs(cap.x):
-  #     var x_dir = sign(vel.x)
-  #     vel.x = apply_friction_flt(vel.x, friction, x_dir * cap.x)
-  #
-  #   if abs(vel.y) > abs(cap.y):
-  #     var y_dir = sign(vel.y)
-  #     vel.y = apply_friction_flt(vel.y, friction, y_dir * cap.y)
-  # else:
-
+func cap_velocity(vel, cap, cap_mask=Vector2(1, 1)):
+  """
+  cap_mask tells us whether to cap specific axes
+  """
   if vel.length_squared() > pow(cap, 2):
-    var n = vel.normalized().abs()
+    var n = (vel * cap_mask).normalized().abs()
     var v_cap = n * cap
-    vel.x = min(max(vel.x, -v_cap.x), v_cap.x)
-    vel.y = min(max(vel.y, -v_cap.y), v_cap.y)
+    if v_cap.x and vel.x:
+      vel.x = min(max(vel.x, -v_cap.x), v_cap.x)
+    if v_cap.y and vel.y:
+      vel.y = min(max(vel.y, -v_cap.y), v_cap.y)
 
   return vel

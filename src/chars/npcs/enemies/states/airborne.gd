@@ -34,6 +34,6 @@ func _on_physics_process(delta):
 func move_step(h_dir):
   var _vel = update_velocity()
   var max_v = host.MAX_VEL
-  _vel = PHYSICS.cap_velocity(_vel, max_v) # , host.get_friction())
+  _vel = PHYS.cap_velocity(_vel, max_v) # , host.get_friction())
 
   host.apply_velocity(_vel)

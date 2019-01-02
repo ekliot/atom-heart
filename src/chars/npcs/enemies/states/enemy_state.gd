@@ -16,7 +16,7 @@ func set_host(host):
 """
 
 func update_velocity(vel=host.get_velocity(), accel=host.ACCEL, h_dir=host.get_h_dir()):
-  return PHYSICS.update_velocity(vel, accel * Vector2(1, h_dir))
+  return PHYS.update_velocity(vel, accel * Vector2(1, h_dir))
 
 func jump(vel, jump_force):
-  return PHYSICS.jump(vel, jump_force)
+  return PHYS.jump(vel, jump_force)
