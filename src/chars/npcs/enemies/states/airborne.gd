@@ -32,8 +32,15 @@ func _on_physics_process(delta):
 """
 
 func move_step(h_dir):
-  var _vel = update_velocity()
+  var _vel = host.velocity
   var max_v = host.MAX_VEL
-  _vel = PHYS.cap_velocity(_vel, max_v) # , host.get_friction())
+
+  # move_cap tells us whether to bother accelerating on the x-axis
+  #   move_cap is 0 if the host is already moving faster than the host ought to accelerate themself
+  #   e.g. if an explosion pushes a host at velocity MAX*2, the host shouldn't be able to walk any faster, and therefore shouldn't accelerate on the x-axis until their velocity drops below MAX
+  var move_cap = int(abs(_vel.x) <= max_v)
+
+  _vel = update_velocity(_vel, host.ACCEL * Vector2(move_cap, 1), h_dir)
+  _vel = PHYS.cap_velocity(_vel, max_v, PHYS.CAP_MASK_X)
 
   host.apply_velocity(_vel)
