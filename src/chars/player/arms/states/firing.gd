@@ -27,6 +27,13 @@ func _blast_off():
   # negative because, if the arm is pointing down, we want to launch up
   var launch_dir = -arm.point_dir
   LOGGER.debug(self, "launching in direction %s with force %s" % [launch_dir, force])
+  if DBG.DEBUG:
+    var blast_ang = rad2deg(launch_dir.angle())
+    var vel = arm.get_parent().velocity
+    var vel_ang = rad2deg(vel.angle())
+    LOGGER.debug(self, "angle b/w host dir and blast dir is %s (%s - %s)" % [blast_ang - vel_ang, blast_ang, vel_ang])
+    LOGGER.debug(self, "\tdot prod: %s" % launch_dir.dot(vel))
+    LOGGER.debug(self, "\tangle_to: %s" % rad2deg(launch_dir.angle_to(vel)))
   arm.get_parent().push(force, launch_dir)
 
 func _on_leave():
