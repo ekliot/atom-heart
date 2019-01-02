@@ -18,7 +18,7 @@ var jump_time = 0.0
 === STATE OVERRIDES
 """
 
-func _on_enter(state_data, last_state):
+func _on_enter(state_data={}, last_state=null):
   # play airborne animation
   # player.animate(ID + move_dir_as_str())
   jumped = false

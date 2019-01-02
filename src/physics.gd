@@ -10,12 +10,12 @@ const FRICTION_AIR = 0.3
 const GRAVITY = 25.0
 const UP = Vector2(0, -1)
 
-enum COLLISON_LAYERS {
-  COL_PL_MOV = 1,
-  COL_PL_DMG = 2,
-  COL_NPC_MOV = 4,
-  COL_NPC_DMG = 8,
-  COL_BLAST = 16
+enum COL_MASKS {
+  PL_MOV = 1,
+  PL_DMG = 2,
+  NPC_MOV = 4,
+  NPC_DMG = 8,
+  BLAST = 16
 }
 
 """

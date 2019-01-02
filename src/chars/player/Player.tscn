@@ -12,64 +12,50 @@
 [ext_resource path="res://src/chars/player/states/airborne.gd" type="Script" id=10]
 [ext_resource path="res://src/chars/player/states/jumping.gd" type="Script" id=11]
 
-[node name="Player" index="0" instance=ExtResource( 1 )]
-
+[node name="Player" instance=ExtResource( 1 )]
 collision_layer = 3
 collision_mask = 3
 script = ExtResource( 2 )
-_sections_unfolded = [ "Collision", "collision" ]
 
 [node name="HUD" parent="." index="0" instance=ExtResource( 3 )]
 
 [node name="Head" parent="HUD/GUI" index="0"]
-
 margin_bottom = 32.0
 
 [node name="HealthBar" parent="HUD/GUI/Head" index="0"]
-
 margin_right = 0.0
 margin_bottom = 32.0
 
 [node name="Torso" parent="HUD/GUI" index="1"]
-
 margin_top = 36.0
 
 [node name="Collider" parent="." index="1"]
-
 polygon = PoolVector2Array( 32, -32, 32, 32, -32, 32, -32, -32 )
 
 [node name="PlayerCamera" parent="." index="2" instance=ExtResource( 4 )]
 
 [node name="Body" type="Sprite" parent="." index="3"]
-
 texture = ExtResource( 5 )
 
 [node name="ArmLeft" parent="." index="4" instance=ExtResource( 6 )]
-
 ARM_SIDE = "left"
 
 [node name="ArmRight" parent="." index="5" instance=ExtResource( 6 )]
-
 ARM_SIDE = "right"
 
 [node name="StateMachine" parent="." index="6"]
-
 editor/display_folded = true
 
 [node name="Idle" parent="StateMachine" index="0" instance=ExtResource( 7 )]
-
 script = ExtResource( 8 )
 
 [node name="Move" parent="StateMachine" index="1" instance=ExtResource( 7 )]
-
 script = ExtResource( 9 )
 
 [node name="Airborne" parent="StateMachine" index="2" instance=ExtResource( 7 )]
-
 script = ExtResource( 10 )
 
 [node name="Jumping" parent="StateMachine" index="3" instance=ExtResource( 7 )]
-
 script = ExtResource( 11 )
 
 

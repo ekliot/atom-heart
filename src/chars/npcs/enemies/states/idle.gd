@@ -9,7 +9,7 @@ extends "enemy_state.gd"
 === OVERRIDES
 """
 
-func _on_enter(state_data, last_state):
+func _on_enter(state_data={}, last_state=null):
   # play idle animation
   # fsm.host.animate(ID + move_dir_as_str())
   return ._on_enter(state_data, last_state)

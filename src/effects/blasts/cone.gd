@@ -196,7 +196,7 @@ func _build_points():
   #   point is always in relative coords
   #   pt is always in global coords
   for point in arc_pts:
-    var ray = BlastRay.new(self.origin, point, PHYS.COL_BLAST)
+    var ray = BlastRay.new(self.origin, point, PHYS.COL_MASKS.BLAST)
     add_child(ray)
     var isect = ray.get_collision_point()
     # LOGGER.debug(self, "%s ~> %s/%s" % [self.origin, self.origin + point, isect])

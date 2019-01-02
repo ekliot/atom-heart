@@ -12,7 +12,7 @@ extends "player_state.gd"
 === STATE OVERRIDES
 """
 
-func _on_enter(state_data, last_state):
+func _on_enter(state_data={}, last_state=null):
   # play airborne animation
   # player.animate(ID + move_dir_as_str())
   return ._on_enter(state_data, last_state)

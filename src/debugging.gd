@@ -12,10 +12,10 @@ const ARM_INSPECT = preload("res://src/ui/debug/ArmInspector.tscn")
 
 func _ready():
   var status
-  
+
   if DEBUG:
     status = "ENABLED"
-    LOGGER.logging_lvl = LOGGER.DEBUG
+    LOGGER.logging_lvl = LOGGER.LEVELS.DEBUG
   else:
     status = "DISABLED"
 

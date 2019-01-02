@@ -9,12 +9,12 @@ extends "player_state.gd"
 === OVERRIDES
 """
 
-func _on_enter(state_data, last_state):
+func _on_enter(state_data:={}, last_state=null) -> String:
   # play idle animation
   # fsm.host.animate(ID + move_dir_as_str())
   return ._on_enter(state_data, last_state)
 
-func _on_physics_process(delta):
+func _on_physics_process(dt:float) -> String:
   if Input.is_action_just_pressed("move_jump"):
     return 'jumping'
 
@@ -37,4 +37,4 @@ func _on_physics_process(delta):
     # short circuit the last fractions of lerping velocity
     player.velocity = Vector2()
 
-  return ._on_physics_process(delta)
+  return ._on_physics_process(dt)
