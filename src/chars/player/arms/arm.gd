@@ -46,6 +46,11 @@ export (float, 0.0, 1.0) var CONE_WIDTH = 0.5
 # this gets multiplied by the calculated force
 export (float) var CONE_LENGTH = 1.0
 
+# this represents how many seconds a charge can be held before it must be released
+export (float, 0.0, 10.0) var MAX_CHARGE = 1.0
+# how quickly in relation to dt charge increases
+export (float, 0.01, 10.0) var CHARGE_RATE = 1.0
+
 # the input action associated with this arm
 onready var ACTION = 'attack_%s' % ARM_SIDE
 
@@ -75,7 +80,11 @@ func _on_state_change(state_from, state_to):
 """
 
 func proportional_force(proportion):
-  # TODO make non-linear?
+  """
+  get the proportional force b/w min and max
+  e.g. proportion of 0.5 is halfway b/w min/max
+  TODO make non-linear? e.g. logarithmic
+  """
   var force = (MAX_FORCE - MIN_FORCE) * proportion
   return MIN_FORCE + force
 

@@ -6,8 +6,6 @@ extends Area2D
 
 const Circle = preload("res://src/assets/Circle.tscn")
 
-var blast_col_mask = pow(2, PHYSICS.COL_BLAST)
-
 signal cone_built
 
 var built = false
@@ -18,6 +16,7 @@ var dist = 0.0
 var arc = 0.0
 var width = 0.0
 
+# how many points to use for each arc
 var resolution = 0
 
 # TODO this ought to be textures/shaders
@@ -35,7 +34,7 @@ var coll_tform = null
 #   - that shape's transform
 var collisions = []
 
-# the average length of the cone's rays
+# the average proportional length of the cone's rays, between 0.0 and 1.0
 # used to determine proportional propulsive power of the blast
 var avg_len = 0.0
 
@@ -93,7 +92,7 @@ func _physics_process(dt):
           # _draw_contact(_pt)
           var dest = _pt - origin
           if dest != Vector2():
-            var r = BlastRay.new(origin, dest, blast_col_mask)
+            var r = BlastRay.new(origin, dest, PHYS.COL_BLAST)
             add_child(r)
             var pt = r.get_collision_point()
             LOGGER.debug(self, "%s -> %s" % [_pt, pt])
@@ -102,7 +101,7 @@ func _physics_process(dt):
             printt(origin, _pt)
   """
 
-  # TODO deal damage to anything in the PHYSICS.COL_NPC_DMG coll-layer
+  # TODO deal damage to anything in the PHYS.COL_NPC_DMG coll-layer
 
 """
 === PRIVATES
@@ -197,7 +196,7 @@ func _build_points():
   #   point is always in relative coords
   #   pt is always in global coords
   for point in arc_pts:
-    var ray = BlastRay.new(self.origin, point, blast_col_mask)
+    var ray = BlastRay.new(self.origin, point, PHYS.COL_BLAST)
     add_child(ray)
     var isect = ray.get_collision_point()
     # LOGGER.debug(self, "%s ~> %s/%s" % [self.origin, self.origin + point, isect])
@@ -225,6 +224,7 @@ func _build_points():
 
   avg_len /= cone_path.size()
   LOGGER.debug(self, "for %d/%d points, average length proportion was %s" % [cone_path.size(), arc_pts.size(), avg_len])
+
 
 class BlastRay:
   extends RayCast2D

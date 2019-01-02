@@ -26,11 +26,11 @@ func _on_physics_process(delta):
     return 'move'
 
   # if we're in motion, apply friction
-  if player.get_velocity_flat().x >= player.MIN_VEL.x:
+  if player.get_velocity_flat().x >= player.MIN_VEL:
     var _vel = player.velocity
 
-    _vel = update_velocity(_vel, Vector2(0.0, PHYSICS.GRAVITY))
-    _vel = PHYSICS.apply_friction_vec(_vel, player.get_friction())
+    _vel = update_velocity(_vel, Vector2(0.0, PHYS.GRAVITY))
+    _vel = PHYS.apply_friction_vec(_vel, player.get_friction())
 
     player.apply_velocity(_vel)
   else:

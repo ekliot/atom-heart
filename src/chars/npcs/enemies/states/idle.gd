@@ -23,8 +23,8 @@ func _on_physics_process(delta):
   if host.get_velocity_flat().x >= host.MIN_VEL.x:
     var _vel = host.velocity
 
-    _vel = update_velocity(_vel, Vector2(0.0, PHYSICS.GRAVITY))
-    _vel = PHYSICS.apply_friction_vec(_vel, host.get_friction())
+    _vel = update_velocity(_vel, Vector2(0.0, PHYS.GRAVITY))
+    _vel = PHYS.apply_friction_vec(_vel, host.get_friction())
 
     host.apply_velocity(_vel)
   else:
