@@ -10,9 +10,24 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Node",
+"class": "Arm",
+"language": "GDScript",
+"path": "res://src/chars/player/arms/arm.gd"
+}, {
+"base": "Node",
 "class": "Blast",
 "language": "GDScript",
 "path": "res://src/effects/blasts/blast.gd"
+}, {
+"base": "Node",
+"class": "Brain",
+"language": "GDScript",
+"path": "res://src/chars/npcs/enemies/brain.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Enemy",
+"language": "GDScript",
+"path": "res://src/chars/npcs/enemies/enemy.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Player",
@@ -20,7 +35,10 @@ _global_script_classes=[ {
 "path": "res://src/chars/player/player.gd"
 } ]
 _global_script_class_icons={
+"Arm": "",
 "Blast": "",
+"Brain": "",
+"Enemy": "",
 "Player": ""
 }
 
