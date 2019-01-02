@@ -11,7 +11,7 @@ const STRIKE_THRESH = 5.0/60.0  # five physics frames
 
 var current_charge = 0.0
 
-func _on_enter(state_data={}, last_state=null):
+func _on_enter(state_data:={}, last_state:=''):
   reset_charge()
   # set animation? or is this handled by the arm_sprite, independently?
   return ._on_enter(state_data, last_state)

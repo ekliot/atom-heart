@@ -3,7 +3,7 @@ filename: player.gd
 """
 
 class_name Player
-extends "res://src/chars/character.gd"
+extends "../character.gd"
 
 """
 === CONSTANTS

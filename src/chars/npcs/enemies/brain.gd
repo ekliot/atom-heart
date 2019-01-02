@@ -4,20 +4,26 @@ filename: brain.gd
 Controller class for enemy AI. To be overriden by individual enemies
 """
 
+class_name Brain
 extends Node
 
-onready var BODY = get_parent()
-onready var FSM = BODY.FSM
-onready var STATES = FSM
+onready var body := get_parent()
+onready var FSM := body.FSM
+# onready var STATES = FSM
 
-var interruptor = null
+var interruptor := ''
 
-func _ready():
+func _ready() -> void:
   # body.FSM.connect('state_change', self, '_on_state_change')
   # connect to states?
   pass
 
-func _on_state_change(state_from, state_to):
+func _process(dt:float) -> void:
+  if interruptor:
+    FSM.enter(interruptor)
+    interruptor = ''
+
+func _on_state_change(state_from:String, state_to:String) -> void:
   """
   to be overridden by other brains
   connected to body.FSM in enemy.gd
@@ -28,16 +34,16 @@ func _on_state_change(state_from, state_to):
 === PERCEPTION
 """
 
-func look_at(dir):
+func look_at(dir:Vector2) -> void:
   look_dir = dir
 
-func line_of_sight():
+func line_of_sight() -> Array:
   """
   return a list of seeable objects in line of sight
   """
   return []
 
-func can_see(obj):
+func can_see(obj:Node2D) -> bool:
   """
   returns whether the object is seen
   """
@@ -48,27 +54,17 @@ func can_see(obj):
 === STATE DIRECTIVES
 """
 
-func idle():
-  if interruptor:
-    return interruptor
-  return null
+func idle() -> String:
+  return ''
 
-func airborne():
-  if interruptor:
-    return interruptor
-  return null
+func airborne() -> String:
+  return ''
 
-func move(to):
-  if interruptor:
-    return interruptor
-  return null
+func move(to:Vector2) -> String:
+  return ''
 
-func chase(target):
-  if interruptor:
-    return interruptor
-  return null
+func chase(target:Node2D) -> String:
+  return ''
 
-func attack(target):
-  if interruptor:
-    return interruptor
-  return null
+func attack(target:Node2D) -> String:
+  return ''

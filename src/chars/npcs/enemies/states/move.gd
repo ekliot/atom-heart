@@ -11,7 +11,7 @@ var to = null
 === STATE OVERRIDES
 """
 
-func _on_enter(state_data={}, last_state=null):
+func _on_enter(state_data:={}, last_state:=''):
   if state_data.has('to'):
     to = state_data['to']
   # play movement animation

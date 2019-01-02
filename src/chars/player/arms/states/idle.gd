@@ -4,7 +4,7 @@ filename: idle.gd
 
 extends "arm_state.gd"
 
-# func _on_enter(state_data={}, last_state=null):
+# func _on_enter(state_data:={}, last_state:=''):
 #   return ._on_enter(state_data, last_state)
 #
 # func _on_leave():

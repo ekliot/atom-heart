@@ -4,6 +4,7 @@ filename: character.gd
 common methods and attributes of kinematic characters
 """
 
+class_name Character
 extends KinematicBody2D
 
 signal update_look_dir(old_dir, new_dir)
