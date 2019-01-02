@@ -9,3 +9,4 @@ _godotapi
 nimcache
 .nimcache
 nakefile
+src/assets/packs
