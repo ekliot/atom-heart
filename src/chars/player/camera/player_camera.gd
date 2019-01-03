@@ -4,8 +4,21 @@ filename: player_camera.gd
 
 extends Camera2D
 
+const MAX_DIST_RATIO := 0.25
+onready var max_dist := _max_dist()
+
 var player_pos := Vector2()
 var mouse_pos := Vector2()
+
+func _ready() -> void:
+  get_viewport().connect('size_changed', self, '_on_view_resize')
+
+func _on_view_resize() -> void:
+  max_dist = _max_dist()
+
+func _max_dist() -> Vector2:
+  printt(get_viewport_rect().size, '*', MAX_DIST_RATIO)
+  return get_viewport_rect().size * MAX_DIST_RATIO
 
 func set_player_pos(pos:Vector2) -> void:
   player_pos = pos
@@ -29,4 +42,9 @@ func update_lookat() -> void:
   mouse_pos = get_global_mouse_position()
 
 func update_offset() -> void:
-  set_offset((mouse_pos - player_pos)/2)
+  var off := (mouse_pos - player_pos) / 2.0
+  var off_len := off.length_squared()
+  var max_len := max_dist.length_squared()
+  if off_len > max_len:
+    off = off.normalized() * max_dist.length()
+  set_offset(off)
