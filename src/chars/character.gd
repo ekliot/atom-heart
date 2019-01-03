@@ -93,7 +93,7 @@ func take_damage(amt:int, from:Node, type=null) -> void:
   emit_signal('take_damage', from, amt, type)
   update_health(amt)
 
-func update_health(amt:int) -> void:
+func update_health(amt:float) -> void:
   # NOTE player and enemy health is different
   # DEV logic to be implemented by each implementer
   emit_signal('update_health', amt)
@@ -131,6 +131,8 @@ func get_friction() -> float:
       # some colliders don't have friction properties
       if collider.get('friction'):
         friction += collider.friction
+      elif collider.get('collision_friction'):
+        friction += collider.collision_friction
   elif is_on_wall():
     # get wall friction
     pass

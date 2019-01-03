@@ -21,8 +21,8 @@ func _on_physics_process(delta) -> String:
     if h_dir:
       return 'move'
     return FSM.START_STATE
-  elif player.is_on_wall():
-    return 'move' # TODO 'on_wall'
+  # elif player.is_on_wall():
+  #   return 'move' # TODO 'on_wall'
 
   move_step(h_dir)
 
@@ -43,6 +43,6 @@ func move_step(h_dir:int) -> void:
   var move_cap := int(abs(_vel.x) <= max_v)
 
   _vel = update_velocity(_vel, player.ACCEL * Vector2(move_cap, 1), h_dir)
-  _vel = PHYS.cap_velocity(_vel, max_v, PHYS.CAP_MASK_X)
+  _vel = PHYS.cap_velocity(_vel, max_v, PHYS.VEC_MASK_X)
 
   player.apply_velocity(_vel)

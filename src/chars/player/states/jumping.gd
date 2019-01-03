@@ -25,10 +25,11 @@ func _on_enter(state_data:={}, last_state:='') -> String:
 func _on_physics_process(dt:float) -> String:
   var h_dir := player.get_h_dir()
 
-  if player.is_on_wall():
-    return 'move' # TODO 'wall jump'
-  else:
-    move_step(h_dir, dt)
+  # if player.is_on_wall():
+  #   return 'move' # TODO 'wall jump'
+  # else:
+  #   move_step(h_dir, dt)
+  move_step(h_dir, dt)
 
   if player.velocity.y > 0:
     return 'airborne'
@@ -54,6 +55,6 @@ func move_step(h_dir:int, dt:float) -> void:
   _vel = update_velocity(_vel)
 
   var max_v := player.MAX_VEL
-  _vel = PHYS.cap_velocity(_vel, max_v, PHYS.CAP_MASK_X)
+  _vel = PHYS.cap_velocity(_vel, max_v, PHYS.VEC_MASK_X)
 
   player.apply_velocity(_vel)

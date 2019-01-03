@@ -30,7 +30,7 @@ func _on_physics_process(dt:float) -> String:
     var _vel := player.velocity
 
     _vel = update_velocity(_vel, Vector2(0.0, PHYS.GRAVITY))
-    _vel = PHYS.apply_friction_vec(_vel, player.get_friction())
+    _vel = PHYS.apply_friction_vec(_vel, player.get_friction(), PHYS.VEC_MASK_0, PHYS.VEC_MASK_X)
 
     player.apply_velocity(_vel)
   else:

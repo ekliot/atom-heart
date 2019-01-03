@@ -16,7 +16,11 @@ func get_health_bar() -> HealthBar:
   return get_head("/HealthBar") as HealthBar
 
 func get_head(child_path:="") -> HBoxContainer:
+  if child_path and child_path[0] != '/':
+    child_path = "/%s" % child_path
   return GUI.get_node("Head%s" % child_path)
 
 func get_foot(child_path:="") -> HBoxContainer:
-  return GUI.get_node("Foot")
+  if child_path and child_path[0] != '/':
+    child_path = "/%s" % child_path
+  return GUI.get_node("Foot%s" % child_path)

@@ -41,6 +41,6 @@ func move_step(h_dir:int) -> void:
   var move_cap := int(abs(_vel.x) <= max_v)
 
   _vel = update_velocity(_vel, host.ACCEL * Vector2(move_cap, 1), h_dir)
-  _vel = PHYS.cap_velocity(_vel, max_v, PHYS.CAP_MASK_X)
+  _vel = PHYS.cap_velocity(_vel, max_v, PHYS.VEC_MASK_X)
 
   host.apply_velocity(_vel)
