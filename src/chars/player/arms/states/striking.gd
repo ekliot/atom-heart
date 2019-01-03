@@ -6,7 +6,7 @@ extends "arm_state.gd"
 
 const STRIKE_FORCE = 200.0
 
-func _on_enter(state_data={}, last_state=null):
+func _on_enter(state_data:={}, last_state:=''):
   # begin animation
   arm.get_sprite().animate('strike')
   var strike_dir = Vector2(sign(arm.point_dir.x), 0.0)

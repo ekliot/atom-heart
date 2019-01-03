@@ -2,4 +2,4 @@
 filename: mook.gd
 """
 
-extends "enemy.gd"
+extends Enemy

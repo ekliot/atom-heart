@@ -8,52 +8,52 @@ const Circle = preload("res://src/assets/Circle.tscn")
 
 signal cone_built
 
-var built = false
+var built := false
 
-var origin = Vector2()
-var dir = Vector2()
-var dist = 0.0
-var arc = 0.0
-var width = 0.0
+var origin := Vector2()
+var dir := Vector2()
+var dist := 0.0
+var arc := 0.0
+var width := 0.0
 
 # how many points to use for each arc
-var resolution = 0
+var resolution := 0
 
 # TODO this ought to be textures/shaders
-var colors = PoolColorArray([Color(1.0, 0.0, 0.0)])
+var colors := PoolColorArray([Color(1.0, 0.0, 0.0)])
 
 # the shape of the blast cone
-var cone_path = PoolVector2Array()
+var cone_path := PoolVector2Array()
 
 # flag for when collision checking is finished
-var parsed = false
+var parsed := false
 # the transform at time of collision detection
-var coll_tform = null
+var coll_tform := null
 # a collection of tuples, each with:
 #   - collided shape
 #   - that shape's transform
-var collisions = []
+var collisions := []
 
 # the average proportional length of the cone's rays, between 0.0 and 1.0
 # used to determine proportional propulsive power of the blast
-var avg_len = 0.0
+var avg_len := 0.0
 
 """
 === NODE OVERRIDES
 """
 
-func _init():
+func _init() -> void:
   connect('body_shape_entered', self, '_save_collision_data')
 
-func _ready():
+func _ready() -> void:
   LOGGER.debug(self, "READY") # print-debugging order of operations
 
-func _draw():
+func _draw() -> void:
   if not built:
     _build_shape()
   draw_polygon(cone_path, colors)
 
-func _physics_process(dt):
+func _physics_process(dt:float):
   """
   only for the first physics frame, execute logic on each collided object
   ideally, instead of arbitrary ray-casting in _build_shape(), we find collided objs
@@ -107,21 +107,21 @@ func _physics_process(dt):
 === PRIVATES
 """
 
-func _save_collision_data(body_id, body, body_shape, area_shape):
-  var owner = body.shape_find_owner(body_shape)
-  var shape = body.shape_owner_get_shape(owner, body_shape)
-  var tform = body.transform
+func _save_collision_data(body_id:int, body:PhysicsBody2D, body_shape:int, area_shape:int) -> void:
+  var owner := body.shape_find_owner(body_shape)
+  var shape := body.shape_owner_get_shape(owner, body_shape)
+  var tform := body.transform
 
-  var coll_data = [shape, tform]
+  var coll_data := [shape, tform]
   self.collisions.push_back(coll_data)
   LOGGER.debug(self, "Saved collision with %s" % body.name)
 
-func _draw_contact(pt):
+func _draw_contact(pt:Vector2) -> void:
   """
   XXX this is just for debugging collision points
   """
   if DBG.DEBUG:
-    var c = Circle.instance()
+    var c := Circle.instance()
     c.global_position = pt
     c.scale = Vector2(4, 4) # HACK
     add_child(c)
@@ -130,20 +130,20 @@ func _draw_contact(pt):
 === PUBLIC CORE
 """
 
-func enable():
+func enable() -> void:
   $Shape.disabled = false
   LOGGER.debug(self, "ENABLE")
 
-func disable():
+func disable() -> void:
   $Shape.disabled = true
   LOGGER.debug(self, "DISABLE")
 
-func setup(_orig, _dir, _dist, _arc, _width, _res=10):
-  origin = _orig # cone origin, a Vector2
-  dir = _dir     # cone direction, a Vector2
-  dist = _dist   # how long the cone is, a float
-  arc = _arc     # provided in degrees, a float
-  width = _width # how wide the cone is, a float
+func setup(_orig:Vector2, _dir:Vector2, _dist:float, _arc:float, _width:float, _res:=10):
+  origin = _orig # cone origin
+  dir = _dir     # cone direction
+  dist = _dist   # how long the cone is
+  arc = _arc     # provided in degrees
+  width = _width # how wide the cone is
   resolution = _res
 
   _build_shape()
@@ -152,10 +152,10 @@ func setup(_orig, _dir, _dist, _arc, _width, _res=10):
 === SHAPE BUILDING
 """
 
-func _build_shape():
+func _build_shape() -> void:
   _build_points()
 
-  var shape = ConvexPolygonShape2D.new()
+  var shape := ConvexPolygonShape2D.new()
   shape.set_point_cloud(cone_path)
   $Shape.shape = shape
   self.coll_tform = self.transform
@@ -163,16 +163,16 @@ func _build_shape():
   built = true
   emit_signal('cone_built')
 
-func _build_points():
+func _build_points() -> void:
   cone_path = PoolVector2Array()
   cone_path.push_back(self.origin)
 
   # the angle of the blast
-  var angle = self.dir.angle()
+  var angle := self.dir.angle()
   # where to hold the points for the initial cone shape
-  var arc_pts = PoolVector2Array()
+  var arc_pts := PoolVector2Array()
   # half of this blast's arc
-  var half_arc = deg2rad(self.arc / 2.0)
+  var half_arc := deg2rad(self.arc / 2.0)
   # first, build the left portion of the cone
   arc_pts.append_array(
     MATHS.blast_points_parametric_left(angle - half_arc, self.width, self.dist, self.resolution)
@@ -186,9 +186,9 @@ func _build_points():
     MATHS.blast_points_parametric_right(angle + half_arc, self.width, self.dist, self.resolution)
   )
 
-  var pt
-  var orig_len
-  var isect_len
+  var pt:Vector2
+  var orig_len:float
+  var isect_len:float
   avg_len = 0.0
 
   # for each desired point, cast a ray and use the collided point instead
@@ -196,9 +196,9 @@ func _build_points():
   #   point is always in relative coords
   #   pt is always in global coords
   for point in arc_pts:
-    var ray = BlastRay.new(self.origin, point, PHYS.COL_BLAST)
+    var ray := BlastRay.new(self.origin, point, PHYS.COL_MASKS.BLAST)
     add_child(ray)
-    var isect = ray.get_collision_point()
+    var isect := ray.get_collision_point()
     # LOGGER.debug(self, "%s ~> %s/%s" % [self.origin, self.origin + point, isect])
 
     orig_len = point.length()
@@ -229,12 +229,12 @@ func _build_points():
 class BlastRay:
   extends RayCast2D
 
-  func _init(origin, dest, mask):
+  func _init(origin:Vector2, dest:Vector2, mask:int) -> void:
     enabled = true
     global_position = origin
     cast_to = dest
     collision_mask = mask
 
-  func _ready():
+  func _ready() -> void:
     # LOGGER.debug(self, "%s => %s" % [global_position, cast_to])
     force_raycast_update()

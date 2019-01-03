@@ -9,7 +9,7 @@ extends "player_state.gd"
 === STATE OVERRIDES
 """
 
-func _on_enter(state_data, last_state):
+func _on_enter(state_data:={}, last_state:=''):
   # play movement animation
   # player.animate(ID + move_dir_as_str())
   return ._on_enter(state_data, last_state)
@@ -31,7 +31,7 @@ func _on_physics_process(delta):
   if not player.is_on_floor():
     return 'airborne'
 
-  var h_dir = player.get_h_dir()
+  var h_dir := player.get_h_dir()
 
   if not h_dir:
     return FSM.START_STATE

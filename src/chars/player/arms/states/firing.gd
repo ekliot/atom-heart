@@ -8,7 +8,7 @@ const Blast = preload("res://src/effects/blasts/Blast.tscn")
 
 var charge = 0.0
 
-func _on_enter(state_data={}, last_state=null):
+func _on_enter(state_data:={}, last_state:=''):
   charge = state_data['charge']
 
   arm.get_sprite().animate('fire')
