@@ -25,9 +25,19 @@ _global_script_classes=[ {
 "path": "res://src/chars/npcs/enemies/brain.gd"
 }, {
 "base": "KinematicBody2D",
+"class": "Character",
+"language": "GDScript",
+"path": "res://src/chars/character.gd"
+}, {
+"base": "KinematicBody2D",
 "class": "Enemy",
 "language": "GDScript",
 "path": "res://src/chars/npcs/enemies/enemy.gd"
+}, {
+"base": "Node",
+"class": "Level",
+"language": "GDScript",
+"path": "res://src/levels/level.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Player",
@@ -38,14 +48,16 @@ _global_script_class_icons={
 "Arm": "",
 "Blast": "",
 "Brain": "",
+"Character": "",
 "Enemy": "",
+"Level": "",
 "Player": ""
 }
 
 [application]
 
 config/name="Atom Heart"
-run/main_scene="res://src/levels/Level1.tscn"
+run/main_scene="res://src/levels/DemoLevel.tscn"
 config/icon="res://src/icon.png"
 
 [autoload]
@@ -55,6 +67,10 @@ DBG="*res://src/debugging.gd"
 MATHS="*res://src/maths.gd"
 PHYS="*res://src/physics.gd"
 GM="*res://src/gamemaster.gd"
+
+[debug]
+
+gdscript/warnings/unused_argument=false
 
 [importer_defaults]
 
@@ -118,6 +134,18 @@ move_jump={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":32,"unicode":0,"echo":false,"script":null)
  ]
 }
+
+[layer_names]
+
+2d_physics/layer_1="Player Movement"
+2d_physics/layer_2="Player Damage"
+2d_physics/layer_3="NPC Movement"
+2d_physics/layer_4="NPC Damage"
+2d_physics/layer_5="Blast Blocking"
+
+[physics]
+
+2d/cell_size=32
 
 [rendering]
 

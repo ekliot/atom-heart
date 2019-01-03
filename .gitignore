@@ -2,6 +2,7 @@
 .import/
 export.cfg
 export_presets.cfg
+*/assets/_*
 
 # Godot-Nim
 _dlls
