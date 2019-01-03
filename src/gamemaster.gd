@@ -2,25 +2,27 @@ extends Node
 
 signal player_set(player)
 
-var PLAYER = null setget set_player, get_player
-var LEVEL = null setget set_level, get_level
+var PLAYER: Player = null setget set_player, get_player
 
-func set_player(player):
-  if not PLAYER:
+const Level = preload("res://src/levels/level.gd")
+var LEVEL: Level = null setget set_level, get_level
+
+func set_player(player:Player) -> void:
+  if player and not PLAYER:
     PLAYER = player
     emit_signal('player_set', PLAYER)
 
-func get_player():
+func get_player() -> Player:
   return PLAYER
 
-func clear_level():
+func clear_level() -> void:
   LEVEL = null
 
-func set_level(level):
+func set_level(level) -> void:
   if not LEVEL:
     # TODO scene switching
     pass
   LEVEL = level
 
-func get_level():
+func get_level() -> Level:
   return LEVEL

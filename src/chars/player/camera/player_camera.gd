@@ -4,20 +4,14 @@ filename: player_camera.gd
 
 extends Camera2D
 
-var player_pos = null
-var mouse_pos  = null
+var player_pos := Vector2()
+var mouse_pos := Vector2()
 
-func set_player_pos(pos):
+func set_player_pos(pos:Vector2) -> void:
   player_pos = pos
   mouse_pos = pos
 
-func update_lookat():
-  mouse_pos = get_global_mouse_position()
-
-func update_offset():
-  set_offset((mouse_pos - player_pos)/2)
-
-func _input(ev):
+func _input(ev:InputEvent) -> void:
   if ev is InputEventMouseMotion:
     # NOTE get_global_mouse_position() gets the cursor's world-coords,
     # but is only available from CanvasItems
@@ -26,7 +20,13 @@ func _input(ev):
     update_lookat()
     update_offset()
 
-func _on_player_move(old_pos, new_pos):
+func _on_player_move(old_pos:Vector2, new_pos:Vector2) -> void:
   player_pos = new_pos
   update_lookat()
   update_offset()
+
+func update_lookat() -> void:
+  mouse_pos = get_global_mouse_position()
+
+func update_offset() -> void:
+  set_offset((mouse_pos - player_pos)/2)
