@@ -53,7 +53,7 @@ func strike():
   return 'striking'
 
 func charge_power(charge=current_charge):
-  var proportion = clamp(charge / MAX_CHARGE, 0.0, 1.0)
+  var proportion = stepify(clamp(charge / arm.MAX_CHARGE, 0.0, 1.0), 0.2)
   return arm.proportional_force(proportion)
 
 func reset_charge():
