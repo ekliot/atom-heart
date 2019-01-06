@@ -17,7 +17,6 @@ func _on_view_resize() -> void:
   max_dist = _max_dist()
 
 func _max_dist() -> Vector2:
-  printt(get_viewport_rect().size, '*', MAX_DIST_RATIO)
   return get_viewport_rect().size * MAX_DIST_RATIO
 
 func set_player_pos(pos:Vector2) -> void:
