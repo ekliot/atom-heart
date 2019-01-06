@@ -6,12 +6,12 @@ extends AnimatedSprite
 
 enum FACING {LEFT, RIGHT}
 
-const ANI_NAME_FMT = "%s_%d"
+const ANI_NAME_FMT := "%s_%d"
 
-var angle = 0 setget set_angle, get_angle
-var facing = FACING.LEFT setget set_facing
+var angle := 0.0 setget set_angle, get_angle
+var facing:int = FACING.LEFT setget set_facing
 
-func animate(state, args=null):
+func animate(state:String)  -> void: #, args=null):
   """
   we want each arm to be able to animate in multiple directions:
     - [0, 45, 90, 135, 180, 225, 270, 315] degrees
@@ -23,11 +23,11 @@ func animate(state, args=null):
   """
   TODO facing
   """
-  var ani_name = ANI_NAME_FMT % [state, angle]
+  var ani_name := ANI_NAME_FMT % [state, angle]
   play(ani_name)
 
 
-func set_facing(dir):
+func set_facing(dir) -> void:
   match typeof(dir):
     TYPE_VECTOR2:
       facing = int((sign(dir.x) + 1) / 2)
@@ -38,11 +38,11 @@ func set_facing(dir):
         facing = dir
 
 
-func set_angle(dir):
+func set_angle(dir:float) -> void:
   """
   takes a float representing radians, and converts it to an angle matching animation names
   """
-  var degrees = rad2deg(dir)
+  var degrees := rad2deg(dir)
   degrees = stepify(degrees, 45.0)
 
   # convert degrees to angles CCW from x-axis
@@ -51,5 +51,5 @@ func set_angle(dir):
 
   angle = degrees # set the degrees to a cardinal direction
 
-func get_angle():
+func get_angle() -> float:
   return angle

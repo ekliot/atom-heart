@@ -9,12 +9,12 @@ extends "player_state.gd"
 === OVERRIDES
 """
 
-func _on_enter(state_data, last_state):
+func _on_enter(state_data:={}, last_state:='') -> String:
   # play idle animation
   # fsm.host.animate(ID + move_dir_as_str())
   return ._on_enter(state_data, last_state)
 
-func _on_physics_process(delta):
+func _on_physics_process(dt:float) -> String:
   if Input.is_action_just_pressed("move_jump"):
     return 'jumping'
 
@@ -26,15 +26,15 @@ func _on_physics_process(delta):
     return 'move'
 
   # if we're in motion, apply friction
-  if player.get_velocity_flat().x >= player.MIN_VEL.x:
-    var _vel = player.velocity
+  if player.get_velocity_flat().x >= player.MIN_VEL:
+    var _vel := player.velocity
 
-    _vel = update_velocity(_vel, Vector2(0.0, PHYSICS.GRAVITY))
-    _vel = PHYSICS.apply_friction_vec(_vel, player.get_friction())
+    _vel = update_velocity(_vel, Vector2(0.0, PHYS.GRAVITY))
+    _vel = PHYS.apply_friction_vec(_vel, player.get_friction(), PHYS.VEC_MASK_0, PHYS.VEC_MASK_X)
 
     player.apply_velocity(_vel)
   else:
     # short circuit the last fractions of lerping velocity
     player.velocity = Vector2()
 
-  return ._on_physics_process(delta)
+  return ._on_physics_process(dt)

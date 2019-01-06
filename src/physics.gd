@@ -6,22 +6,34 @@ a collection of physics constants and helper methods
 
 extends Node
 
-const FRICTION_AIR = 0.3
-const GRAVITY = 25.0
-const UP = Vector2(0, -1)
+const FRICTION_AIR := 0.3
+const GRAVITY := 25.0
+const UP := Vector2(0, -1)
 
-enum COLL {COL_PL_MOV, COL_PL_DMG, COL_NPC_MOV, COL_NPC_DMG, COL_BLAST}
+const VEC_MASK_0 := Vector2(0, 0)
+const VEC_MASK_1 := Vector2(1, 1)
+const VEC_MASK_X := Vector2(1, 0)
+const VEC_MASK_Y := Vector2(0, 1)
+
+enum COL_MASKS {
+  PL_MOV = 1,
+  PL_DMG = 2,
+  NPC_MOV = 4,
+  NPC_DMG = 8,
+  BLAST = 16
+}
+
 """
 === COLLISION LAYERS
 
-enum: 0 1 2 3 4
-bits: x x x x x xxxxxxxxxxxxxxxxxxxxxxxxxxx
-      ^ ^ ^ ^ ^ ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-      | | | | |--- Blast blocking
-      | | | |--- NPC damage
-      | | |--- NPC movement
-      | |--- Player damage
-      |--- Player movement
+  enum: 0 1 2 3 4
+  bits: x x x x x xxxxxxxxxxxxxxxxxxxxxxxxxxx
+        ^ ^ ^ ^ ^ ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        | | | | |--- Blast blocking
+        | | | |--- NPC damage
+        | | |--- NPC movement
+        | |--- Player damage
+        |--- Player movement
 
 """
 

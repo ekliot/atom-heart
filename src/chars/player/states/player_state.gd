@@ -4,29 +4,21 @@ filename: player_state.gd
 
 extends "res://src/util/states/state.gd"
 
-var player = null
+var player: Player = null
 
-func set_host(host):
-  if not player:
-    player = host
+func set_host(_player:Player) -> void:
+  if not player and _player:
+    player = _player
 
 
 """
 === CORE METHODS
 """
 
-func update_velocity(vel=player.get_velocity(), accel=player.ACCEL, h_dir=player.get_h_dir()):
-  """
-  given a velocity vector, acceleration vector, and horizontal movement direction,
-  return a velocity vector with acceleration and movement applied
-  """
-  accel.x *= h_dir
-  vel += accel
-  return vel
+func update_velocity(vel:=player.velocity,
+                     accel:=player.ACCEL,
+                     h_dir:=player.get_h_dir()) -> Vector2:
+  return PHYS.update_velocity(vel, accel * Vector2(h_dir, 1))
 
-func jump(vel, jump_force):
-  """
-  return a velocity vector with player jump velocity applied
-  """
-  vel.y -= jump_force
-  return vel
+func jump(vel:Vector2, jump_force:float) -> Vector2:
+  return PHYS.jump(vel, jump_force)

@@ -22,12 +22,22 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "BlastCone",
 "language": "GDScript",
-"path": "res://src/chars/player/arms/blasts/cone.gd"
+"path": "res://src/effects/blasts/cone.gd"
+}, {
+"base": "Node",
+"class": "Brain",
+"language": "GDScript",
+"path": "res://src/chars/npcs/enemies/brain.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Character",
 "language": "GDScript",
 "path": "res://src/chars/character.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Enemy",
+"language": "GDScript",
+"path": "res://src/chars/npcs/enemies/enemy.gd"
 }, {
 "base": "Node",
 "class": "Level",
@@ -43,7 +53,9 @@ _global_script_class_icons={
 "Arm": "",
 "Blast": "",
 "BlastCone": "",
+"Brain": "",
 "Character": "",
+"Enemy": "",
 "Level": "",
 "Player": ""
 }
